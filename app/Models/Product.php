@@ -13,7 +13,6 @@ class Product extends Model
         'name',
         'description',
         'price',
-        'stock',
         'active',
     ];
 
@@ -29,5 +28,13 @@ class Product extends Model
               'source' => 'name'
           ]
         ];
+    }
+
+    public function categories(){
+        return $this->belongsToMany(Category::class);
+    }
+
+    public function productInputs(){
+        return $this->belongsTo(ProductInput::class);
     }
 }

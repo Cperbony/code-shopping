@@ -4,6 +4,7 @@ namespace CodeShopping\Http\Controllers\Api;
 
 use CodeShopping\Http\Controllers\Controller;
 use CodeShopping\Http\Requests\CategoryRequest;
+use CodeShopping\Http\Resources\CategoryResource;
 use CodeShopping\Models\Category;
 
 class CategoryController extends Controller
@@ -11,35 +12,35 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Category[]|\Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
-        return Category::all();
+        return CategoryResource::collection(Category::all());
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param CategoryRequest $request
-     * @return Category|\Illuminate\Database\Eloquent\Model
+     * @return CategoryResource
      */
     public function store(CategoryRequest $request)
     {
         $category = Category::create($request->all());
         $category->refresh();
-        return $category;
+        return new CategoryResource($category);
     }
 
     /**
      * Display the specified resource.
      *
      * @param  \CodeShopping\Models\Category $category
-     * @return Category
+     * @return CategoryResource
      */
     public function show(Category $category)
     {
-        return $category;
+        return new CategoryResource($category);
     }
 
     /**

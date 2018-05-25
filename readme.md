@@ -5,7 +5,12 @@ DESENVOLVIMENTO DE APLICAÇÕES COM LARAVEL,ANGULAR E IONIC
 Nesta primeira fase, você deverá implementar:
 
 A API REST demonstrada no capítulo com o recurso de categorias
-Um novo recurso para os produtos que serão vendidos, chamando de "products". _______________________________________________________
+Um novo recurso para os produtos que serão vendidos, chamando de "products". 
+
+## Semana 2##
+### CRUD de categorias e produtos ###
+_______________________________________________________
+  
   
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
