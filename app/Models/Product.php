@@ -34,7 +34,7 @@ class Product extends Model
         return $this->belongsToMany(Category::class);
     }
 
-    public function productInputs(){
-        return $this->belongsTo(ProductInput::class);
-    }
+//    public function productInputs(){
+//        return $this->belongsTo(ProductInput::class);
+//    }
 }

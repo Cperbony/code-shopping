@@ -4,7 +4,7 @@ namespace CodeShopping\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProductInputResource extends JsonResource
+class ProductOutputResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
