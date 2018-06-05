@@ -1,14 +1,37 @@
 # code-shopping #
-DESENVOLVIMENTO DE APLICAÇÕES COM LARAVEL,ANGULAR E IONIC
-## Semana 1 ##
+DESENVOLVIMENTO DE APLICAÇÕES COM LARAVEL 5.6, ANGULAR 5 E IONIC 3.
+
+## DESAFIO 1
 ### CRUD de categorias e produtos ###
 Nesta primeira fase, você deverá implementar:
 
 A API REST demonstrada no capítulo com o recurso de categorias
 Um novo recurso para os produtos que serão vendidos, chamando de "products". 
 
-## Semana 2##
+## DESAFIO 2
 ### CRUD de categorias e produtos ###
+
+A API REST demonstrada no capítulo com o recurso de categorias
+Um novo recurso para os produtos que serão vendidos, chamando de "products"
+A tabela de produtos deverá ter os seguintes campos:
+  -> name:string, slug:string, description:text, price:decimal, stock:integer com default 0 e active:boolean com default 1
+  
+## DESAFIO 3
+### Estoque de Produtos ###
+Nesta fase, você deverá implementar o recurso alinhado de categorias e produtos, integrando com a estrutura de API Resource. Além disto, adicione também o API Resource no recurso de produto e categoria.
+
+Implemente um recurso para dar entrada de estoque nos produtos. O model deve se chamar ProductInput e deverá conter os
+seguintes campos:
+
+amount -> integer,quantidade que está entrando
+product_id -> integer, chave estrangeira para a tabela de produtos
+
+Ao salvar a entrada, deve-se acrescentar a quantidade no estoque de produto.
+
+## DESAFIO 4
+### Imagens dos produtos
+Nesta fase você deverá implementar o upload de fotos dos produtos conforme as aulas, além disto permita que a API possa substituir uma foto de produto por outra nova e também que possa excluir uma foto.
+
 _______________________________________________________
   
   
