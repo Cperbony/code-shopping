@@ -2,12 +2,15 @@
 
 namespace CodeShopping\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, SoftDeletes;
+
+    protected $dates = ['deleted_at'];
 
     /**
      * The attributes that are mass assignable.
@@ -26,4 +29,15 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+//    public static function createCustom($attributes = array())
+//    {
+//        return parent::create($attributes);
+//    }
+
+    public function fill(array $attributes)
+    {
+        !isset($attributes['password']) ?: $attributes['password'] = bcrypt($attributes['password']);
+        return parent::fill($attributes);
+    }
 }

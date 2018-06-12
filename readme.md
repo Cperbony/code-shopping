@@ -32,8 +32,13 @@ Ao salvar a entrada, deve-se acrescentar a quantidade no estoque de produto.
 ### Imagens dos produtos
 Nesta fase você deverá implementar o upload de fotos dos produtos conforme as aulas, além disto permita que a API possa substituir uma foto de produto por outra nova e também que possa excluir uma foto.
 
+## DESAFIO 5
+### Exclusão lógica
+
+Nesta fase, você deverá criar um CRUD de usuários na API.
+Lembre-se de utilizar a função bcrypt do Laravel para criptografar a senha no banco de dados.
+Use todos os recursos necessários: paginação, API Resource e etc.
 _______________________________________________________
-  
   
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 

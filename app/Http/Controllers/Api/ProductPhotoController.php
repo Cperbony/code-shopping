@@ -27,6 +27,7 @@ class ProductPhotoController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
+     * @param Product $product
      * @return \Illuminate\Support\Collection
      * @throws \Exception
      */
@@ -48,7 +49,6 @@ class ProductPhotoController extends Controller
         return new ProductPhotoResource($photo);
     }
 
-
     /**
      * Update the specified resource in storage.
      *
@@ -61,7 +61,7 @@ class ProductPhotoController extends Controller
     public function update(Request $request, Product $product, ProductPhoto $photo)
     {
         $this->assertProductPhoto($product, $photo);
-        $photo->updateWithPhoto($request->photo);
+        $photo = $photo->updateWithPhoto($request->photo);
         return new ProductPhotoResource($photo);
     }
 

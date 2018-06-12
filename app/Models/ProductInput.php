@@ -14,6 +14,6 @@ class ProductInput extends Model
     //Many to One, Toda entrada se refere a um produto
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class)->withTrashed();
     }
 }
