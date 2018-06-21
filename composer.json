@@ -9,7 +9,8 @@
         "cviebrock/eloquent-sluggable": "4.5.*",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.6.*",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "tymon/jwt-auth": "dev-develop#6e419252cc592afc2ed4cd61be6f5e303a636cc5"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.4",
