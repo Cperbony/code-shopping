@@ -38,6 +38,14 @@ Nesta fase você deverá implementar o upload de fotos dos produtos conforme as 
 Nesta fase, você deverá criar um CRUD de usuários na API.
 Lembre-se de utilizar a função bcrypt do Laravel para criptografar a senha no banco de dados.
 Use todos os recursos necessários: paginação, API Resource e etc.
+
+## DESAFIO 6
+### Autenticação com JWT
+Implementação da autenticação JWT na API Laravel. 
+
+## DESAFIO 7
+### Iniciando com Angular
+Criação da aplicação Angular e implementação da captura do token.
 _______________________________________________________
   
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
