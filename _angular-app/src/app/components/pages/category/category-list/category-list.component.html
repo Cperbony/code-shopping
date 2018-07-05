@@ -1,32 +1,37 @@
 <div class="row">
-  <h1>Categorias</h1>
-  <table class="table table-striped">
-    <thead>
-    <tr>
-        <td colspan="5">
-      <button>Nova Categoria</button>
-        </td>
-    </tr>
-    <tr>
-      <th style="width: 5%">ID</th>
-      <th style="width: 65%">Nome</th>
-      <th style="width: 10%">Ativa?</th>
-      <th style="width: 10%">Criado em</th>
-      <th style="width: 10%">Ações</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let category of categories">
-        <td>{{ category.id }}</td>
-        <td>{{ category.name }}</td>
-        <td>
-            <i class="fas" [ngClass]="{'fa-check': category.active, 'fa-times': !category.active}"></i>
-        </td>
-        <td>{{ category.created_at.date | date: 'dd/MM/yyyy' }}</td>
-        <td>
-
-        </td>
-    </tr>
-    </tbody>
-  </table>
+    <h1>Categorias</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <td colspan="5">
+                <button class="btn btn-primary" (click)="showModalInsert()">Nova Categoria</button>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 5%">ID</th>
+            <th style="width: 65%">Nome</th>
+            <th style="width: 10%">Ativa?</th>
+            <th style="width: 10%">Criado em</th>
+            <th style="width: 10%">Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let category of categories">
+            <td>{{ category.id }}</td>
+            <td>{{ category.name }}</td>
+            <td>
+                <i class="fas" [ngClass]="{'fa-check': category.active, 'fa-times': !category.active}"></i>
+            </td>
+            <td>{{ category.created_at.date | date: 'dd/MM/yyyy' }}</td>
+            <td>
+                <a href="javascript:void(0)" (click)="showModalEdit(category.id)">
+                    <i class="fas fa-edit"></i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
+<category-new-modal (onSuccess)="onInsertSuccess($event)" (onError)="onInsertError($event)"></category-new-modal>
+
+<category-edit-modal [categoryId]="categoryId" (onSuccess)="onEditSuccess($event)" (onError)="onEditError($event)"></category-edit-modal>
