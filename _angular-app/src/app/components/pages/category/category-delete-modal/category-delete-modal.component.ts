@@ -5,16 +5,13 @@ import {Category} from "../../../../models";
 import {CategoryHttpService} from "../../../../services/http/category-http.service";
 
 @Component({
-    selector: 'category-edit-modal',
-    templateUrl: './category-edit-modal.component.html',
-    styleUrls: ['./category-edit-modal.component.css']
+    selector: 'category-delete-modal',
+    templateUrl: './category-delete-modal.component.html',
+    styleUrls: ['./category-delete-modal.component.css']
 })
-export class CategoryEditModalComponent implements OnInit {
+export class CategoryDeleteModalComponent implements OnInit {
 
-    category: Category = {
-        name: '',
-        active: true
-    };
+    category: Category = null;
 
     _categoryId: number;
 
@@ -38,9 +35,9 @@ export class CategoryEditModalComponent implements OnInit {
         }
     }
 
-    submit() {
+    destroy() {
         this.categoryHttp
-            .update(this._categoryId, this.category)
+            .destroy(this._categoryId)
             .subscribe((category) => {
                 this.onSuccess.emit(category);
                 this.modal.hide();
