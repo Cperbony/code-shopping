@@ -8,6 +8,7 @@ use CodeShopping\Http\Requests\UserRequest;
 use CodeShopping\Http\Resources\UserResource;
 use CodeShopping\Models\User;
 use CodeShopping\Common\OnlyTrashed;
+use Illuminate\Http\Request;
 
 
 class UserController extends Controller
@@ -15,10 +16,10 @@ class UserController extends Controller
     use OnlyTrashed;
 
     /**
-     * @param \Request $request
+     * @param Request $request
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function index(\Request $request)
+    public function index(Request $request)
     {
         $query = User::query();
         $query = $this->onlyTrashedIfRequested($request, $query);

@@ -1,0 +1,60 @@
+<div class="row">
+  <h1>Usuários</h1>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <td colspan="5">
+        <button class="btn btn-primary" (click)="userInsertService.showModalInsert()">Novo Usuário
+        </button>
+      </td>
+    </tr>
+    <tr>
+      <th style="width: 5%">ID</th>
+      <th style="width: 35%">Nome</th>
+      <th style="width: 35%">Email</th>
+      <!--<th style="width: 5%">Ativa?</th>-->
+      <th style="width: 10%">Criado em</th>
+      <th style="width: 15%">Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of users | paginate: {itemsPerPage: 5, currentPage: pagination.page, totalItems: pagination.totalItems }">
+      <td>{{ user.id }}</td>
+      <td>{{ user.name }}</td>
+      <td>{{ user.email }}</td>
+      <!--<td>-->
+        <!--<i class="fas" [ngClass]="{'fa-check': user.active, 'fa-times': !user.active}"></i>-->
+      <!--</td>-->
+      <td>{{ user.created_at | date: 'dd/MM/yyyy' }}</td>
+      <td>
+        <a href="javascript:void(0)" (click)="userEditService.showModalEdit(user.id)">
+          <i class="fas fa-edit"></i>
+        </a>
+        <a href="javascript:void(0)" (click)="userDeleteService.showModalDelete(user.id)">
+          <i class="fas fa-trash-alt"></i>
+        </a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <pagination-controls (pageChange)="pageChanged($event)"
+                       previousLabel="Anterior"
+                       nextLabel="Próxima">
+  </pagination-controls>
+
+</div>
+<user-new-modal
+        (onSuccess)="userInsertService.onInsertSuccess($event)"
+        (onError)="userInsertService.onInsertError($event)">
+</user-new-modal>
+
+<user-edit-modal [userId]="userId"
+                     (onSuccess)="userEditService.onEditSuccess($event)"
+                     (onError)="userEditService.onEditError($event)">
+</user-edit-modal>
+
+<user-delete-modal [userId]="userId"
+                       (onSuccess)="userDeleteService.onDeleteSuccess($event)"
+                       (onError)="userDeleteService.onDeleteError($event)">
+</user-delete-modal>
