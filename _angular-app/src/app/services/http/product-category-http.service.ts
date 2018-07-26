@@ -3,6 +3,7 @@ import {ProductCategory} from "../../models";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from 'rxjs/internal/Observable';
 import {map} from "rxjs/internal/operators";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
     providedIn: 'root'
@@ -10,7 +11,7 @@ import {map} from "rxjs/internal/operators";
 
 export class ProductCategoryHttpService {
 
-    private baseApi = 'http://localhost:8000/api';
+    private baseApi = `${environment.api.url}`;
 
     constructor(private http: HttpClient) {
     }

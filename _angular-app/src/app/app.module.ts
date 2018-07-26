@@ -5,8 +5,7 @@ import {AppComponent} from './app.component';
 import {LoginComponent} from './components/pages/login/login.component';
 import {CategoryListComponent} from './components/pages/category/category-list/category-list.component';
 import {FormsModule} from "@angular/forms";
-import {RouterModule, Routes} from "@angular/router";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AlertErrorComponent} from './components/bootstrap/alert-error/alert-error.component';
 import {ModalComponent} from './components/bootstrap/modal/modal.component';
 import {CategoryNewModalComponent} from './components/pages/category/category-new-modal/category-new-modal.component';
@@ -23,37 +22,16 @@ import {UserListComponent} from './components/pages/user/user-list/user-list.com
 import {UserDeleteModalComponent} from './components/pages/user/user-delete-modal/user-delete-modal.component';
 import {UserEditModalComponent} from './components/pages/user/user-edit-modal/user-edit-modal.component';
 import {UserNewModalComponent} from './components/pages/user/user-new-modal/user-new-modal.component';
-import { ProductCategoryNewComponent } from './components/pages/product-category/product-category-new/product-category-new.component';
-import {JwtModule, JWT_OPTIONS} from '@auth0/angular-jwt';
+import {ProductCategoryNewComponent} from './components/pages/product-category/product-category-new/product-category-new.component';
+import {JWT_OPTIONS, JwtModule} from '@auth0/angular-jwt';
 import {AuthService} from "./services/auth.service";
-import { NavbarComponent } from './components/bootstrap/navbar/navbar.component';
+import {NavbarComponent} from './components/bootstrap/navbar/navbar.component';
+import {RefreshTokenInterceptorService} from "./services/refresh-token-interceptor.service";
+import {AppRoutingModule} from "./app-routing.module";
 
-const routes: Routes = [
-    {
-        path: 'login', component: LoginComponent
-    },
-    {
-        path: 'categories/list', component: CategoryListComponent
-    },
-    {
-        path: 'products/:product/categories/list', component: ProductCategoryListComponent
-    },
-    {
-        path: 'products/list', component: ProductListComponent
-    },
-    {
-        path: 'users/list', component: UserListComponent
-    },
-    {
-        path: '',
-        redirectTo: '/login',
-        pathMatch: 'full'
-    }
-];
-
-function jwtFactory(authService: AuthService){
+function jwtFactory(authService: AuthService) {
     return {
-        whiteListedDomains: [
+        whitelistedDomains: [
             new RegExp('localhost:8000/*')
         ],
         tokenGetter: () => {
@@ -89,7 +67,7 @@ function jwtFactory(authService: AuthService){
         BrowserModule,
         FormsModule,
         HttpClientModule,
-        RouterModule.forRoot(routes, {enableTracing: true}),
+        AppRoutingModule,
         NgxPaginationModule,
         JwtModule.forRoot({
             jwtOptionsProvider: {
@@ -99,7 +77,13 @@ function jwtFactory(authService: AuthService){
             }
         })
     ],
-    providers: [],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: RefreshTokenInterceptorService,
+            multi: true
+        }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {

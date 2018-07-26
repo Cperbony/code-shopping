@@ -4,13 +4,14 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {HttpResource, SearchParams, SearchParamsBuilder} from "./http-resource";
 import {Observable} from "rxjs/internal/Observable";
 import {map} from "rxjs/operators";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserHttpService implements HttpResource<User>{
 
-    private baseUrl = 'http://localhost:8000/api/users';
+    private baseUrl = `${environment.api.url}/users`;
 
     constructor(private http: HttpClient) {
     }

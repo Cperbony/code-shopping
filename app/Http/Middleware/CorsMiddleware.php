@@ -21,6 +21,7 @@ class CorsMiddleware
             header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE');
             header('Access-Control-Request-Headers: Content-Type, Authorization');
             header('Access-Control-Request-Method: GET, POST, PUT, PATCH, DELETE');
+            header('Access-Control-Expose-Header: Authorization');
         }
         return $next($request);
     }
