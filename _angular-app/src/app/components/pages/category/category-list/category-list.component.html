@@ -1,18 +1,22 @@
 <div class="row">
     <h1>Categorias</h1>
+    {{sortColumn | json}}
     <table class="table table-striped">
         <thead>
         <tr>
-            <td colspan="5">
+            <td>
                 <button class="btn btn-primary" (click)="categoryInsertService.showModalInsert()">Nova Categoria
                 </button>
             </td>
+            <td colspan="4">
+                <category-search-form (onSearch)="search($event)"></category-search-form>
+            </td>
         </tr>
         <tr>
-            <th style="width: 5%">ID</th>
-            <th style="width: 65%">Nome</th>
+            <th style="width: 5%" [sortColumn]="sortColumn" columnName="id" (onSort)="sort($event)">ID</th>
+            <th style="width: 65%" [sortColumn]="sortColumn" columnName="name" (onSort)="sort($event)">Nome</th>
             <th style="width: 10%">Ativa?</th>
-            <th style="width: 10%">Criado em</th>
+            <th style="width: 10%" [sortColumn]="sortColumn" columnName="created_at" (onSort)="sort($event)">Criado em</th>
             <th style="width: 10%">Ações</th>
         </tr>
         </thead>
