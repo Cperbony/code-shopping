@@ -3,21 +3,13 @@
     <h5 modal-title>Nova Categoria</h5>
 
     <div modal-body>
-      <div class="form-group">
-        <label for="name">Nome</label>
-        <input type="text" class="form-control" id="name" name="name" required
-               [(ngModel)]="category.name">
-      </div>
-      <div class="form-group form-check">
-        <input type="checkbox" class="form-check-input" id="active" name="active" required
-               [(ngModel)]="category.active">
-        <label for="active">Ativo?</label>
-      </div>
+      Form {{form.get('name').errors | json}}
+      <category-form [form]="form"></category-form>
     </div>
 
     <div modal-footer>
       <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-      <button type="submit" class="btn btn-primary">Incluir</button>
+      <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Incluir</button>
     </div>
   </modal>
 </form>
