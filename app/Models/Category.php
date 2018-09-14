@@ -9,8 +9,7 @@ use Mnabialek\LaravelEloquentFilter\Traits\Filterable;
 
 class Category extends Model
 {
-    use Sluggable;
-    use Filterable;
+    use Sluggable, Filterable;
 
     protected $fillable = ['name', 'active'];
 

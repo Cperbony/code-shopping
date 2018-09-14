@@ -1,0 +1,41 @@
+<div class="row">
+  <h1>Entrada de Estoque</h1>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <td>
+        <button class="btn btn-primary" (click)="inputInsertService.showModalInsert()">Nova Entrada
+        </button>
+      </td>
+      <td colspan="4">
+        <product-input-search-form (onSearch)="search($event)"></product-input-search-form>
+      </td>
+    </tr>
+    <tr>
+      <th style="width: 5%" [sortColumn]="sort-column" columnName="id" (onSort)="sort($event)">ID</th>
+      <th style="width: 75%" [sortColumn]="sort-column" columnName="product_name" (onSort)="sort($event)">Produto</th>
+
+      <th style="width: 10%">Quant.</th>
+    <th style="width: 10%" [sortColumn]="sort-column" columnName="created_at" (onSort)="sort($event)">Criado em</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let input of inputs | paginate: {itemsPerPage: pagination.itemsPerPage, currentPage: pagination.page, totalItems: pagination.totalItems }">
+      <td>{{ input.id }}</td>
+      <td>{{ input.product.name }}</td>
+      <td>{{ input.amount }}</td>
+      <!--<td>{{ input.created_at | date: 'dd/MM/yyyy' }}</td>-->
+    </tr>
+    </tbody>
+  </table>
+
+  <pagination-controls (pageChange)="pageChanged($event)"
+                       previousLabel="Anterior"
+                       nextLabel="Próxima">
+  </pagination-controls>
+
+</div>
+<product-input-new-modal
+        (onSuccess)="productInsertService.onInsertSuccess($event)"
+        (onError)="productInsertService.onInsertError($event)">
+</product-input-new-modal>

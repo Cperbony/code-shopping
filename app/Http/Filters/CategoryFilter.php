@@ -4,12 +4,6 @@ namespace CodeShopping\Http\Filters;
 
 use Mnabialek\LaravelEloquentFilter\Filters\SimpleQueryFilter;
 
-/**
- * Created by PhpStorm.
- * User: Claus Perbony
- * Date: 02/08/2018
- * Time: 10:14
- */
 class CategoryFilter extends SimpleQueryFilter
 {
     protected $simpleFilters = ['search'];

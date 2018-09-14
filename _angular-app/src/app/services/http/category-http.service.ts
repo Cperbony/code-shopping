@@ -3,7 +3,7 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from 'rxjs/internal/Observable';
 import {map} from 'rxjs/operators';
 
-import {Category} from "../../models";
+import {Category, Product} from "../../models";
 import {HttpResource, SearchParams, SearchParamsBuilder} from "./http-resource";
 import {AuthService} from "../auth.service";
 import {environment} from "../../../environments/environment";
@@ -15,7 +15,7 @@ import {environment} from "../../../environments/environment";
 })
 export class CategoryHttpService implements HttpResource<Category> {
 
-    private baseUrl =  `${environment.api.url}/categories`;
+    private baseUrl = `${environment.api.url}/categories`;
 
     constructor(private http: HttpClient, private authService: AuthService) {
     }
@@ -51,10 +51,13 @@ export class CategoryHttpService implements HttpResource<Category> {
     }
 
     update(id: number, data: Category): Observable<Category> {
-        // const token = this.authService.getToken();
+        const token = this.authService.getToken();
         return this.http
-            .put<{ data: Category }>(`${this.baseUrl}/${id}`, data)
-            .pipe(
+            .put<{ data: Category }>(`${this.baseUrl}/${id}`, data, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }).pipe(
                 map(response => response.data)
             );
     }

@@ -1,0 +1,12 @@
+<modal>
+    <h5 modal-title>Substituir Foto Atual</h5>
+    <div modal-body>
+        <card-error *ngIf="showErrors()">
+            <list-error [errors]="errors"></list-error>
+        </card-error>
+        <div class="form-group">
+            <label for="photo">Substituir Foto</label>
+            <input type="file" class="form-control" id="photo" (change)="editPhoto($event.target.files)">
+        </div>
+    </div>
+</modal>

@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 
 trait OnlyTrashed
 {
-
     /**
      * @param Request $request
      * @param Builder $query

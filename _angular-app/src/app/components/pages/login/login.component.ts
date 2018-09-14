@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
         password: 'secret'
     };
 
-    showMessageError = false;
+    showMessageError: boolean = false;
 
     constructor(private authService: AuthService, private router: Router) {
     }

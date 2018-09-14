@@ -3,7 +3,8 @@
 namespace CodeShopping\Http\Controllers\Api;
 
 use CodeShopping\Http\Controllers\Controller;
-use CodeShopping\Http\Requests\ProductInputRequest;
+use CodeShopping\Http\Filters\ProductInputFilter;
+use CodeShopping\Http\Requests\ProductInputsRequest;
 use CodeShopping\Http\Resources\ProductInputResource;
 use CodeShopping\Models\ProductInput;
 
@@ -16,7 +17,9 @@ class ProductInputController extends Controller
      */
     public function index()
     {
-        $inputs = ProductInput::with('product')->paginate(); //eager loading
+        $filter = app(ProductInputFilter::class);
+        $filterQuery = ProductInput::with('product')->filtered($filter);
+        $inputs = $filterQuery->paginate(); //eager loading
         return ProductInputResource::collection($inputs);
 //        return new ProductInputResource($product);
     }
@@ -24,10 +27,10 @@ class ProductInputController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param ProductInputRequest $request
+     * @param ProductInputsRequest $request
      * @return ProductInputResource
      */
-    public function store(ProductInputRequest $request)
+    public function store(ProductInputsRequest $request)
     {
         $input = ProductInput::create($request->all());
         return new ProductInputResource($input);

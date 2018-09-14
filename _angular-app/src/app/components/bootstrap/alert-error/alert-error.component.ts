@@ -7,7 +7,6 @@ import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 })
 export class AlertErrorComponent implements OnInit {
 
-
     @Output()
     showChange: EventEmitter<boolean> = new EventEmitter<boolean>();
     _show = false;

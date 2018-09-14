@@ -1,15 +1,18 @@
 <form (submit)="submit()">
-  <modal (onHide)="hideModal($event)">
-    <h5 modal-title>Nova Categoria</h5>
+    <modal (onHide)="hideModal($event)">
+        <h5 modal-title>Nova Categoria</h5>
 
-    <div modal-body>
-      Form {{form.get('name').errors | json}}
-      <category-form [form]="form"></category-form>
-    </div>
+        <div modal-body>
+            <card-error *ngIf="showErrors()">
+                <list-error [errors]="errors"></list-error>
+            </card-error>
+            Form {{ form.get('name').errors | json }}
+            <category-form [form]="form"></category-form>
+        </div>
 
-    <div modal-footer>
-      <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-      <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Incluir</button>
-    </div>
-  </modal>
+        <div modal-footer>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Incluir</button>
+        </div>
+    </modal>
 </form>

@@ -47,7 +47,7 @@ export class CategoryListComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log('ngOnInit');
+        // console.log('ngOnInit');
         this.getCategories();
     }
 

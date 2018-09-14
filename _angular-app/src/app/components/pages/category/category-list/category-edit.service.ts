@@ -11,7 +11,6 @@ export class CategoryEditService{
     private _categoryListComponent: CategoryListComponent;
 
     constructor(private notifyMessage: NotifyMessageService){
-
     }
 
     set categoryListComponent(value: CategoryListComponent) {

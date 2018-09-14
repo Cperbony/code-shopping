@@ -22,7 +22,7 @@ class ProductPhotosTableSeeder extends Seeder
         $this->allFakerPhotos = $this->getFakerPhotos();
         /** @var \Illuminate\Database\Eloquent\Collection $products */
         $products = Product::all();
-        $this->deleteAllPhotoInProductsPath();
+        $this->deleteAllPhotosInProductsPath();
         $self = $this;
         $products->each(function ($product) use ($self) {
             $self->createPhotoDir($product);
@@ -30,13 +30,16 @@ class ProductPhotosTableSeeder extends Seeder
         });
     }
 
+    /**
+     * @return Collection
+     */
     private function getFakerPhotos(): Collection
     {
         $path = (storage_path($this->fakerPhotosPath));
         return collect(\File::allFiles($path));
     }
 
-    private function deleteAllPhotoInProductsPath()
+    private function deleteAllPhotosInProductsPath()
     {
         $path = ProductPhoto::PRODUCTS_PATH;
         \File::deleteDirectory(storage_path($path), true);

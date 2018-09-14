@@ -2,7 +2,8 @@ import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core'
 import {ModalComponent} from "../../../bootstrap/modal/modal.component";
 import {HttpErrorResponse} from "@angular/common/http";
 import {CategoryHttpService} from "../../../../services/http/category-http.service";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import fieldsOptions from "../category-form/category-fields-options";
 
 @Component({
     selector: 'category-new-modal',
@@ -12,6 +13,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 export class CategoryNewModalComponent implements OnInit {
 
     form: FormGroup;
+    errors = {};
 
     @ViewChild(ModalComponent) modal: ModalComponent;
 
@@ -19,8 +21,9 @@ export class CategoryNewModalComponent implements OnInit {
     @Output() onError: EventEmitter<HttpErrorResponse> = new EventEmitter<HttpErrorResponse>();
 
     constructor(public categoryHttp: CategoryHttpService, private formBuilder: FormBuilder) {
+        const maxLength = fieldsOptions.name.validationMessage.maxlength;
         this.form = this.formBuilder.group( {
-            name: '',
+            name: ['', [Validators.required, Validators.maxLength(maxLength)]],
             active: true,
         });
     }
@@ -38,13 +41,22 @@ export class CategoryNewModalComponent implements OnInit {
                 });
                 this.onSuccess.emit(category);
                 this.modal.hide();
-            }, error => this.onError.emit(error));
+            }, responseError => {
+                if(responseError.status === 422 ){
+                    this.errors = responseError.error.errors;
+                }
+                this.onError.emit(responseError)
+            });
     }
 
 
     showModal() {
         this.modal.show();
         // setTimeout(() => {this.modal.hide();}, 30000)
+    }
+
+    showErrors(){
+        return Object.keys(this.errors).length != 0;
     }
 
     hideModal($event: Event) {

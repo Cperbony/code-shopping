@@ -4,7 +4,7 @@ use CodeShopping\Models\Product;
 use CodeShopping\Models\ProductOutput;
 use Illuminate\Database\Seeder;
 
-class ProductOutputTableSeeder extends Seeder
+class ProductOutputsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

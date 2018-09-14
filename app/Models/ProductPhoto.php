@@ -15,7 +15,6 @@ class ProductPhoto extends Model
 
     const PRODUCTS_PATH = self::BASE_PATH . '/' . self::DIR_PRODUCTS;
 
-
     protected $fillable = [
         'file_name',
         'product_id'
@@ -26,7 +25,6 @@ class ProductPhoto extends Model
         $path = self::PRODUCTS_PATH;
         return storage_path("{$path}/{$productId}");
     }
-
 
     /**
      * @param int $productId
@@ -105,7 +103,6 @@ class ProductPhoto extends Model
             }
         }
     }
-
 
     public static function uploadFiles($productId, array $files)
     {

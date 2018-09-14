@@ -58,15 +58,16 @@ class CategoryController extends Controller
      *
      * @param CategoryRequest $request
      * @param  \CodeShopping\Models\Category $category
-     * @return Category
+     * @return CategoryResource
      */
     public function update(CategoryRequest $request, Category $category)
     {
         $category->fill($request->all());
         $category->save();
 
-//        return $category;
-        return response([], 204);
+////        return $category;
+//        return response([], 204);
+        return new CategoryResource($category);
     }
 
     /**

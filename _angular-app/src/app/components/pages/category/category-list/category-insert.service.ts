@@ -11,13 +11,11 @@ export class CategoryInsertService {
     private _categoryListComponent: CategoryListComponent;
 
     constructor(private notifyMessage: NotifyMessageService) {
-
     }
 
     set categoryListComponent(value: CategoryListComponent) {
         this._categoryListComponent = value;
     }
-
 
     showModalInsert() {
         this._categoryListComponent.categoryNewModal.showModal();

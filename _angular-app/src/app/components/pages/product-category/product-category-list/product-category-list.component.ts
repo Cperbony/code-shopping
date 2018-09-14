@@ -49,7 +49,7 @@ export class ProductCategoryListComponent implements OnInit {
             .list(this.productId)
             .subscribe(productCategory => {
                 this.productCategory = productCategory;
-                console.log(this.productCategory);
+                // console.log(this.productCategory);
             });
     }
 
