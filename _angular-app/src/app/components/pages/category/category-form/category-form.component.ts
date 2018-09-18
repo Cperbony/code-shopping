@@ -27,6 +27,6 @@ export class CategoryFormComponent implements OnInit {
     }
 
     // get name() {
-    //     return this.fieldsOptions.name;
+    //     return this.productInputFfieldsOptions.name;
     // }
 }

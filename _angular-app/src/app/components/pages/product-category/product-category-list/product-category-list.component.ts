@@ -6,7 +6,7 @@ import {ProductCategoryHttpService} from "../../../../services/http/product-cate
 import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
-    selector: 'app-product-category-list',
+    selector: 'product-category-list',
     templateUrl: './product-category-list.component.html',
     styleUrls: ['./product-category-list.component.css']
 })

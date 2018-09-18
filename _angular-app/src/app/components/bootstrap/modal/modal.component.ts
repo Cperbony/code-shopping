@@ -1,4 +1,5 @@
 import {Component, ElementRef, EventEmitter, OnInit, Output} from '@angular/core';
+import {NavigationEnd, Router} from "@angular/router";
 
 declare const $;
 
@@ -12,7 +13,7 @@ export class ModalComponent implements OnInit {
     @Output()
     onHide: EventEmitter<Event> = new EventEmitter<Event>();
 
-    constructor(private element: ElementRef) {
+    constructor(private element: ElementRef, private router: Router) {
     }
 
     ngOnInit() {
@@ -25,9 +26,15 @@ export class ModalComponent implements OnInit {
         jQueryElement.on('hidden.bs.modal', (e) => {
             console.log(e);
             this.onHide.emit(event);
-        })
+        });
+        this.router.events.subscribe(event => {
+            if (event instanceof NavigationEnd) {
+                if(event.url === '/login'){
+                    this.hide();
+                }
+            }
+        });
     }
-
     show() {
         this.getjQueryElement().modal('show');
     }
@@ -40,5 +47,4 @@ export class ModalComponent implements OnInit {
         const nativeElement = this.element.nativeElement;
         return $(nativeElement.firstChild);
     }
-
 }

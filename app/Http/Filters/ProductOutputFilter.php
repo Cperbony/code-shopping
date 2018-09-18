@@ -12,7 +12,7 @@ use Mnabialek\LaravelEloquentFilter\Filters\SimpleQueryFilter;
  * Date: 02/08/2018
  * Time: 10:14
  */
-class ProductInputFilter extends SimpleQueryFilter
+class ProductOutputFilter extends SimpleQueryFilter
 {
     use QueryCommonRangeFilter;
 
@@ -27,7 +27,7 @@ class ProductInputFilter extends SimpleQueryFilter
 
     protected function applyInterval($value)
     {
-        $this->query = $this->intervalRangeFilter($this->query, 'product_inputs.created_at', $value);
+        $this->query = $this->intervalRangeFilter($this->query, 'product_outputs.created_at', $value);
     }
 
     protected function applySortProductName($order)
@@ -37,7 +37,7 @@ class ProductInputFilter extends SimpleQueryFilter
 
     protected function applySortCreatedAt($order)
     {
-        $this->query->orderBy('product_inputs.created_at', $order);
+        $this->query->orderBy('product_outputs.created_at', $order);
     }
 
     /**
@@ -47,11 +47,10 @@ class ProductInputFilter extends SimpleQueryFilter
     public function apply($query)
     {
         $query = $query
-            ->select('product_inputs.*')
-            ->join('products', 'products.id', '=', 'product_inputs.product_id');
+            ->select('product_outputs.*')
+            ->join('products', 'products.id', '=', 'product_outputs.product_id');
         return parent::apply($query);
     }
-
 }
 
 //SELECT * FROM products_inputs JOIN products ON products.id = products_inputs.products_id

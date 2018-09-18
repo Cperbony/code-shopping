@@ -28,23 +28,28 @@ import {AuthService} from "./services/auth.service";
 import {NavbarComponent} from './components/bootstrap/navbar/navbar.component';
 import {RefreshTokenInterceptorService} from "./services/refresh-token-interceptor.service";
 import {AppRoutingModule} from "./app-routing.module";
-import { SortColumnComponent } from './components/common/sort-column/sort-column.component';
-import { CategorySearchFormComponent } from './components/pages/category/category-search-form/category-search-form.component';
+import {SortColumnComponent} from './components/common/sort-column/sort-column.component';
+import {CategorySearchFormComponent} from './components/pages/category/category-search-form/category-search-form.component';
 import {CategoryFormComponent} from "./components/pages/category/category-form/category-form.component";
-import { FieldErrorComponent } from './components/bootstrap/field-error/field-error.component';
+import {FieldErrorComponent} from './components/bootstrap/field-error/field-error.component';
 import {IsInvalidControlDirective, IsInvalidDirective} from './directives/is-invalid.directive';
-import { ListErrorComponent } from './components/bootstrap/list-error/list-error.component';
-import { CardErrorComponent } from './components/bootstrap/card-error/card-error.component';
-import { ProductInputListComponent } from './components/pages/product-input/product-input-list/product-input-list.component';
-import { ProductInputNewModalComponent } from './components/pages/product-input/product-input-new-modal/product-input-new-modal.component';
+import {ListErrorComponent} from './components/bootstrap/list-error/list-error.component';
+import {CardErrorComponent} from './components/bootstrap/card-error/card-error.component';
+import {ProductInputListComponent} from './components/pages/product-input/product-input-list/product-input-list.component';
+import {ProductInputNewModalComponent} from './components/pages/product-input/product-input-new-modal/product-input-new-modal.component';
 import {Select2Module} from "ng2-select2";
-import { ProductInputFormComponent } from './components/pages/product-input/product-input-form/product-input-form.component';
-import { ProductInputSearchFormComponent } from './components/pages/product-input/product-input-search-form/product-input-search-form.component';
-import { ProductPhotoManagerComponent } from './components/pages/product-photo/product-photo-manager/product-photo-manager.component';
-import { ProductOutputListComponent } from './components/pages/product-output/product-output-list/product-output-list.component';
-import { ProductPhotoUploadComponent } from './components/pages/product-photo/product-photo-upload/product-photo-upload.component';
-import { ProductPhotoEditModalComponent } from './components/pages/product-photo/product-photo-edit-modal/product-photo-edit-modal.component';
-import { ProductPhotoDeleteModalComponent } from './components/pages/product-photo/product-photo-delete-modal/product-photo-delete-modal.component';
+import {ProductInputFormComponent} from './components/pages/product-input/product-input-form/product-input-form.component';
+import {ProductInputSearchFormComponent} from './components/pages/product-input/product-input-search-form/product-input-search-form.component';
+import {ProductPhotoManagerComponent} from './components/pages/product-photo/product-photo-manager/product-photo-manager.component';
+import {ProductOutputListComponent} from './components/pages/product-output/product-output-list/product-output-list.component';
+import {ProductPhotoUploadComponent} from './components/pages/product-photo/product-photo-upload/product-photo-upload.component';
+import {ProductPhotoEditModalComponent} from './components/pages/product-photo/product-photo-edit-modal/product-photo-edit-modal.component';
+import {ProductPhotoDeleteModalComponent} from './components/pages/product-photo/product-photo-delete-modal/product-photo-delete-modal.component';
+import {ProductOutputNewModalComponent} from './components/pages/product-output/product-output-new-modal/product-output-new-modal.component';
+import {ProductOutputFormComponent} from './components/pages/product-output/product-output-form/product-output-form.component';
+import {ProductOutputSearchComponent} from './components/pages/product-output/product-output-search/product-output-search.component';
+import {ProductSearchFormComponent} from './components/pages/product/product-search-form/product-search-form.component';
+import { ProductIdAutocompleteComponent } from './components/select2-fields/product-id-autocomplete/product-id-autocomplete.component';
 
 function jwtFactory(authService: AuthService) {
     return {
@@ -95,7 +100,12 @@ function jwtFactory(authService: AuthService) {
         ProductOutputListComponent,
         ProductPhotoUploadComponent,
         ProductPhotoEditModalComponent,
-        ProductPhotoDeleteModalComponent
+        ProductPhotoDeleteModalComponent,
+        ProductOutputNewModalComponent,
+        ProductOutputFormComponent,
+        ProductOutputSearchComponent,
+        ProductSearchFormComponent,
+        ProductIdAutocompleteComponent,
     ],
     imports: [
         BrowserModule,

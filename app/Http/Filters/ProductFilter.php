@@ -2,6 +2,7 @@
 
 namespace CodeShopping\Http\Filters;
 
+use CodeShopping\Common\QueryCommonRangeFilter;
 use Mnabialek\LaravelEloquentFilter\Filters\SimpleQueryFilter;
 
 /**
@@ -12,15 +13,26 @@ use Mnabialek\LaravelEloquentFilter\Filters\SimpleQueryFilter;
  */
 class ProductFilter extends SimpleQueryFilter
 {
-    protected $simpleFilters = ['search'];
+    use QueryCommonRangeFilter;
 
-    protected $simpleSorts = ['id', 'name', 'price', 'created_at'];
+    protected $simpleFilters = ['search', 'interval', 'price'];
+
+    protected $simpleSorts = ['id', 'name', 'price', 'stock', 'created_at'];
 
     protected function applySearch($value)
     {
         $this->query
             ->where('name', 'LIKE', "%$value%")
             ->orWhere('description', 'LIKE', "%$value%");
+    }
+
+    protected function applyPrice($value){
+        $this->query = $this->intervalRangeFilter($this->query, 'price', $value);
+    }
+
+    protected function applyInterval($value)
+    {
+        $this->query = $this->intervalRangeFilter($this->query, 'created_at', $value);
     }
 
     public function hasFilterParameter()

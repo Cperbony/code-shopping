@@ -7,9 +7,11 @@ import {CategoryDeleteModalComponent} from "../category-delete-modal/category-de
 import {CategoryInsertService} from "./category-insert.service";
 import {CategoryEditService} from "./category-edit.service";
 import {CategoryDeleteService} from "./category-delete.service";
+import {FieldsPagination} from "../../../../common/fields-pagination";
+import {FieldsSortColumn} from "../../../../common/fields-sort-column";
 
 @Component({
-    selector: 'app-category-list',
+    selector: 'category-list',
     templateUrl: './category-list.component.html',
     styleUrls: ['./category-list.component.css']
 })
@@ -17,13 +19,16 @@ export class CategoryListComponent implements OnInit {
 
     categories: Array<Category> = [];
 
-    pagination = {
+    pagination: FieldsPagination = {
         page: 1,
         totalItems: 0,
         ItemsPerPage: 15
     };
 
-    sortColumn = {column: '', sort: ''};
+    sortColumn: FieldsSortColumn = {
+        column: 'id',
+        sort: 'asc'
+    };
 
     @ViewChild(CategoryNewModalComponent)
     categoryNewModal: CategoryNewModalComponent;
@@ -69,7 +74,7 @@ export class CategoryListComponent implements OnInit {
         this.getCategories();
     }
 
-    sort(sortColumn) {
+    sort($event) {
         this.getCategories();
     }
 

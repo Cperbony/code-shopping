@@ -1,25 +1,20 @@
 import {ElementRef, Injectable} from "@angular/core";
-import {AuthService} from "../../../../services/auth.service";
-import {environment} from "../../../../../environments/environment";
 import {AbstractControl} from "@angular/forms";
+import {AuthService} from "../../services/auth.service";
+
+declare const $;
 
 @Injectable({
     providedIn: 'root'
 })
 
-export class ProductIdFieldService {
-
+export class Select2FieldsService {
     data;
     options: Select2Options;
     select2Element: ElementRef;
     formControl: AbstractControl;
 
     constructor(private authService: AuthService) {
-    }
-
-    get divModal() {
-        const modalElement = this.select2Native.closest('modal');
-        return modalElement.firstChild;
     }
 
     get select2Native(): HTMLElement {
@@ -31,31 +26,6 @@ export class ProductIdFieldService {
         this.formControl = formControl;
         this.setResetData();
         this.setOptions(autoCompleteUrl);
-        // this.options = {
-        //     minimumInputLength: 1,
-        //     dropdownParent: $(this.divModal),
-        //     theme: 'bootstrap4',
-        //     ajax: {
-        //         headers: {
-        //             'Accept': 'application/json',
-        //             'Authorization': this.authService.authorizationHeader
-        //         },
-        //         url: `${environment.api.url}/inputs`,
-        //         data(params) {
-        //             return {
-        //                 search: params.term
-        //             }
-        //         },
-        //         processResults(data) {
-        //             return {
-        //                 results: data.data.map((product) => {
-        //                     return {id: product.id, text: product.name}
-        //                 })
-        //             }
-        //         }
-        //     }
-        // };
-        // this.data = [];
         this.onClosingDropdown();
         this.resetSelect2OnSetNull();
     }
@@ -73,7 +43,7 @@ export class ProductIdFieldService {
             alert('.select2-parent not found');
             return;
         }
-        this.options.dropdownParent = $(modalElement.firstChild);
+        return this.options.dropdownParent = $(modalElement.firstChild);
     }
 
     private setOptions(autoCompleteUrl: string) {
@@ -92,7 +62,8 @@ export class ProductIdFieldService {
                         url: params.url,
                         data: params.data,
                         dataType: params.dataType,
-                        success: success
+                        success: success,
+                        failure: failure
                     });
                 },
                 data(params) {
@@ -110,7 +81,7 @@ export class ProductIdFieldService {
                 }
             }
         };
-        this.options = {...options, ...this.options}
+        this.options = {...options, ...this.options};
         this.setOptionsParent();
     }
 
@@ -138,4 +109,5 @@ export class ProductIdFieldService {
     updateFormControl(value) {
         this.formControl.setValue(value);
     }
+
 }

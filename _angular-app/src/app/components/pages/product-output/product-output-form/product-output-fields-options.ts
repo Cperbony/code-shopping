@@ -1,6 +1,6 @@
 import {FieldsOptions} from "../../../../common/fields-options";
 
-const productInputFieldsOptions: FieldsOptions = {
+const productOutputFieldsOptions: FieldsOptions = {
     product_id: {
         id: 'product_id',
         label: 'Produto'
@@ -14,4 +14,4 @@ const productInputFieldsOptions: FieldsOptions = {
     }
 };
 
-export default productInputFieldsOptions;
+export default productOutputFieldsOptions;

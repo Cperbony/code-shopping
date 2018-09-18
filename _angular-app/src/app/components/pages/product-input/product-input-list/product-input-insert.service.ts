@@ -6,12 +6,12 @@ import {ProductInputListComponent} from "./product-input-list.component";
 @Injectable({
     providedIn: 'root'
 })
+
 export class ProductInputInsertService {
 
     private _productInputListComponent: ProductInputListComponent;
 
     constructor(private notifyMessage: NotifyMessageService) {
-
     }
 
     set inputListComponent(value: ProductInputListComponent) {
@@ -22,14 +22,14 @@ export class ProductInputInsertService {
         this._productInputListComponent.productInputNewModal.showModal();
     }
 
-    onInsertSuccess($event: any) {
-        this.notifyMessage.success('Produto cadastrado com sucesso!');
+    onInsertError($event: HttpErrorResponse) {
+        this.notifyMessage.error('Não foi possível cadastrar a entrada de estoque.');
         console.log($event);
-        this._productInputListComponent.getInputs();
     }
 
-    onInsertError($event: HttpErrorResponse) {
-        this.notifyMessage.error('Não foi possível inserir o produto.');
+    onInsertSuccess($event: any) {
+        this.notifyMessage.success('Entrada de estoque cadastrada com sucesso!');
         console.log($event);
+        this._productInputListComponent.getInputs();
     }
 }

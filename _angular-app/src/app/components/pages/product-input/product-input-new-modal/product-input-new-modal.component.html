@@ -1,1 +1,16 @@
-<product-input-form></product-input-form>
+<form (submit)="submit()">
+    <modal (onHide)="hideModal($event)">
+        <h5 modal-title>Nova Entrada de Estoque</h5>
+
+        <div modal-body class="select2-parent">
+            <!--<card-error>-->
+                <!--<list-error [errors]="errors"></list-error>-->
+            <!--</card-error>-->
+            <product-input-form [form]="form"></product-input-form>
+        </div>
+        <div modal-footer>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Incluir</button>
+        </div>
+    </modal>
+</form>

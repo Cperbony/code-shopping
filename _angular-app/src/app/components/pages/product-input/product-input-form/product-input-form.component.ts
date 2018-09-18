@@ -1,8 +1,9 @@
 import {ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {FormGroup} from "@angular/forms";
-import fieldsOptions from "./product-input-fields-options";
+import {default as productInputFieldsOptions} from "./product-input-fields-options";
 import {ProductIdFieldService} from "./product-id-field.service";
 import {Select2Component} from "ng2-select2";
+import {environment} from "../../../../../environments/environment";
 
 @Component({
     selector: 'product-input-form',
@@ -13,25 +14,34 @@ export class ProductInputFormComponent implements OnInit {
 
     @Input()
     form: FormGroup;
+
     @ViewChild(Select2Component, {read: ElementRef})
     select2Element: ElementRef;
 
     constructor(
-        private changeRef: ChangeDetectorRef,
-        public productIdField: ProductIdFieldService
-    ) {
-    }
+        // private changeRef: ChangeDetectorRef,
+        //         public productIdField: ProductIdFieldService
+    ) {}
 
     ngOnInit() {
-        this.productIdField.make(this.select2Element, this.form.get('product_id'));
+        // const url = `${environment.api.url}/inputs`;
+        // this.productIdField.make(url, this.select2Element, this.form.get('amount'));
     }
 
-    ngOnChanges() {
-        this.changeRef.detectChanges();
-    }
+    // ngOnChanges() {
+    //     this.changeRef.detectChanges();
+    // }
 
     get fieldsOptions(): any {
-        return fieldsOptions;
+        return productInputFieldsOptions;
+    }
+
+    get productId() {
+        return this.fieldsOptions.product_id;
+    }
+
+    get amount(){
+        return this.fieldsOptions.amount;
     }
 
 }
