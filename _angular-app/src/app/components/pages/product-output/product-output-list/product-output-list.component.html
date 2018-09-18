@@ -1,22 +1,24 @@
 <div class="row">
   <h1>Saída de Estoque</h1>
+</div>
+<div class="row md-2 mt-2">
+  <div class="col-md-2">
+    <button class="btn btn-primary" (click)="outputInsertService.showModalInsert()">Baixa de Estoque</button>
+  </div>
+  <div class="col-md-10 ">
+    <product-output-search-form (onSearch)="search($event)"></product-output-search-form>
+  </div>
+</div>
+<div class="row">
   <table class="table table-striped">
     <thead>
     <tr>
-      <td>
-        <button class="btn btn-primary" (click)="outputInsertService.showModalInsert()">Nova Baixa
-        </button>
-      </td>
-      <td colspan="4">
-        <product-output-search (onSearch)="search($event)"></product-output-search>
-      </td>
-    </tr>
-    <tr>
       <th style="width: 5%" [sortColumn]="sortColumn" columnName="id" (onSort)="sort($event)">ID</th>
-      <th style="width: 70%" [sortColumn]="sortColumn" columnName="product_name" (onSort)="sort($event)">Produto</th>
-
+      <th style="width: 65%" [sortColumn]="sortColumn" columnName="product_name" (onSort)="sort($event)">Produto
+      </th>
       <th style="width: 10%">Quant.</th>
-      <th style="width: 15%" [sortColumn]="sortColumn" columnName="created_at" (onSort)="sort($event)">Criado em</th>
+      <th style="width: 20%" [sortColumn]="sortColumn" columnName="created_at" (onSort)="sort($event)">Criado em
+      </th>
     </tr>
     </thead>
     <tbody>
@@ -33,9 +35,9 @@
                        previousLabel="Anterior"
                        nextLabel="Próxima">
   </pagination-controls>
-
 </div>
+
 <product-output-new-modal
-        (onSuccess)="productOutputInsertService.onInsertSuccess($event)"
-        (onError)="productOutputInsertService.onInsertError($event)">
+        (onSuccess)="outputInsertService.onInsertSuccess($event)"
+        (onError)="outputInsertService.onInsertError($event)">
 </product-output-new-modal>

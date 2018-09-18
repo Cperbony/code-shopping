@@ -1,8 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ProductOutput} from "../../../../models";
 import {ProductOutputNewModalComponent} from "../product-output-new-modal/product-output-new-modal.component";
 import {ProductOutputInsertService} from "./product-output-insert.service";
 import {ProductOutputHttpService} from "../../../../services/http/product-output-http.service";
+import {FieldsSortColumn} from "../../../../common/fields-sort-column";
+import {NotifyMessageService} from "../../../../services/notify-message.service";
+import {FieldsPagination} from "../../../../common/fields-pagination";
+import {ProductOutput} from "../../../../models";
 
 @Component({
   selector: 'product-output-list',
@@ -14,22 +17,26 @@ export class ProductOutputListComponent implements OnInit {
     outputs: Array<ProductOutput> = [];
     searchText: string;
 
-    pagination = {
+    pagination: FieldsPagination = {
         page: 1,
         totalItems: 0,
         ItemsPerPage: 15
     };
 
-    sortColumn = {column: '', sort: ''};
+    sortColumn: FieldsSortColumn = {
+        column: 'created_at',
+        sort: 'desc'
+    };
 
     @ViewChild(ProductOutputNewModalComponent)
     productOutputNewModal: ProductOutputNewModalComponent;
 
-    @ViewChild(ProductOutputInsertService)
-    productOutputInsertService: ProductOutputInsertService;
+    // @ViewChild(ProductOutputInsertService)
+    // productInputInsertService: ProductOutputInsertService;
 
-    constructor(private outputHttp: ProductOutputHttpService,
-                protected outputInsertService: ProductOutputInsertService) {
+    constructor(private notifyMessage: NotifyMessageService,
+                private productOutputHttp: ProductOutputHttpService,
+                public outputInsertService: ProductOutputInsertService) {
         this.outputInsertService.outputListComponent = this;
     }
 
@@ -38,7 +45,7 @@ export class ProductOutputListComponent implements OnInit {
     }
 
     getOutputs() {
-        this.outputHttp.list({
+        this.productOutputHttp.list({
             page: this.pagination.page,
             sort: this.sortColumn.column === '' ? null : this.sortColumn,
             search: this.searchText
@@ -55,11 +62,11 @@ export class ProductOutputListComponent implements OnInit {
         this.getOutputs();
     }
 
-    sort(sortColumn) {
+    sort($event) {
         this.getOutputs();
     }
 
-    search(search){
+    search(search) {
         this.searchText = search;
         this.getOutputs();
     }

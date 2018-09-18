@@ -1,9 +1,7 @@
-import {ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {FormGroup} from "@angular/forms";
 import {default as productInputFieldsOptions} from "./product-input-fields-options";
-import {ProductIdFieldService} from "./product-id-field.service";
 import {Select2Component} from "ng2-select2";
-import {environment} from "../../../../../environments/environment";
 
 @Component({
     selector: 'product-input-form',

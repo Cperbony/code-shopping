@@ -1,1 +1,16 @@
-<product-output-form></product-output-form>
+<form (submit)="submit()">
+    <modal (onHide)="hideModal($event)">
+        <h5 modal-title>Nova Saída de Estoque</h5>
+
+        <div modal-body class="select2-parent">
+            <!--<card-error>-->
+            <!--<list-error [errors]="errors"></list-error>-->
+            <!--</card-error>-->
+            <product-output-form [form]="form"></product-output-form>
+        </div>
+        <div modal-footer>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Efetuar Baixa</button>
+        </div>
+    </modal>
+</form>

@@ -2,8 +2,8 @@ import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core'
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ModalComponent} from "../../../bootstrap/modal/modal.component";
 import {HttpErrorResponse} from "@angular/common/http";
-import productInputFfieldsOptions from "../../product-input/product-input-form/product-input-fields-options";
 import {ProductOutputHttpService} from "../../../../services/http/product-output-http.service";
+import productOutputFieldsOptions from "../product-output-form/product-output-fields-options";
 
 @Component({
   selector: 'product-output-new-modal',
@@ -15,16 +15,17 @@ export class ProductOutputNewModalComponent implements OnInit {
     form: FormGroup;
     errors = {};
 
-    @ViewChild(ModalComponent) modal: ModalComponent;
+    @ViewChild(ModalComponent)
+    modal: ModalComponent;
 
     @Output() onSuccess: EventEmitter<any> = new EventEmitter<any>();
     @Output() onError: EventEmitter<HttpErrorResponse> = new EventEmitter<HttpErrorResponse>();
 
-    constructor(public outputHttp: ProductOutputHttpService,
+    constructor(private productOutputHttp: ProductOutputHttpService,
                 private formBuilder: FormBuilder) {
         this.form = this.formBuilder.group( {
             product_id: [null, [Validators.required]],
-            amount: ['', [Validators.required, Validators.min(productInputFfieldsOptions.amount.validationMessage.min)]],
+            amount: ['', [Validators.required, Validators.min(productOutputFieldsOptions.amount.validationMessage.min)]],
         });
     }
 
@@ -32,15 +33,13 @@ export class ProductOutputNewModalComponent implements OnInit {
     }
 
     submit() {
-        this.outputHttp
+        this.productOutputHttp
             .create(this.form.value)
-            .subscribe((input) => {
-                this.form.reset({
-                    amount: '',
-                    product_id: null
-                });
-                this.onSuccess.emit(input);
+            .subscribe(productOutput => {
                 this.modal.hide();
+                this.onSuccess.emit(productOutput);
+                this.form.reset();
+                this.errors = {};
             }, responseError => {
                 if(responseError.status === 422 ){
                     this.errors = responseError.error.errors;
@@ -49,12 +48,15 @@ export class ProductOutputNewModalComponent implements OnInit {
             });
     }
 
-
     showModal() {
         this.modal.show();
     }
 
     hideModal($event: Event) {
         console.log($event);
+    }
+
+    showErrors(){
+        return Object.keys(this.errors).length != 0;
     }
 }
