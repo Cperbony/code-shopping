@@ -1,4 +1,3 @@
-import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import * as firebase from 'firebase';
 import firebaseConfig from '../../app/firebase-config';
@@ -16,25 +15,41 @@ declare const firebaseui;
 @Injectable()
 export class FirebaseAuthProvider {
 
-    constructor(public http: HttpClient) {
+    constructor() {
+        firebase.initializeApp(firebaseConfig);
         console.log('Hello FirebaseAuthProvider Provider');
     }
 
+    async makePhoneNumberForm(selectorElement: string) {
+        const firebaseui = await this.getFirebaseUI();
+        await this.getFirebaseUI();
+        const uiConfig = {
+            signInOptions: [
+                firebase.auth.PhoneAuthProvider.PROVIDER_ID
+            ],
+            callbacks: {
+                signInSuccessWithAuthResult: (authResult, redirectUrl) => {
+                    return false;
+                }
+            }
+        };
+        const ui = new firebaseui.auth.AuthUI(firebase.auth());
+        ui.start(selectorElement, uiConfig);
+    }
+
     //Sistema de promessa JS, Assícrona
-    private getFirebaseUi(): Promise<any> {
+    private async getFirebaseUI(): Promise<any> {
         return new Promise((resolve, reject) => {
+            if (window.hasOwnProperty('firebaseui')) {
+                console.log('Sem scriptjs');
+                resolve(firebaseui);
+                return;
+            }
+            console.log('Entrou no construtor');
             scriptjs('https://www.gstatic.com/firebasejs/ui/3.4.1/firebase-ui-auth__pt.js', () => {
-                resolve(firebaseui)
+                console.log('Carregou FirebaseUI');
+                resolve(firebaseui);
             });
         });
     }
 }
-
-// firebase.initializeApp(firebaseConfig);
-// const uiConfig = {
-//     signInOptions: [
-//         firebase.auth.PhoneAuthProvider.PROVIDER_ID
-//     ]
-// };
-// const ui = new firebaseui.auth.AuthUI(firebase.auth());
-// ui.start('#firebase-ui', uiConfig);
