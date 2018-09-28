@@ -20,6 +20,10 @@ export class FirebaseAuthProvider {
         console.log('Hello FirebaseAuthProvider Provider');
     }
 
+    get firebase() {
+        return firebase;
+    }
+
     async makePhoneNumberForm(selectorElement: string) {
         const firebaseui = await this.getFirebaseUI();
         await this.getFirebaseUI();
@@ -51,5 +55,29 @@ export class FirebaseAuthProvider {
                 resolve(firebaseui);
             });
         });
+    }
+
+    getUser(): Promise<firebase.User | null> {
+        const currentUser = this.getCurrentUser();
+        if(currentUser){
+            return Promise.resolve(currentUser);
+        }
+        return new Promise((resolve, reject) => {
+            const unsubscribed = this.firebase
+                .auth()
+                .onAuthStateChanged(
+                    (user) => {
+                        resolve(user);
+                        unsubscribed();
+                    },
+                    (error) => {
+                        reject(error);
+                        unsubscribed();
+                    });
+        });
+    }
+
+    private getCurrentUser(): firebase.User | null {
+        return this.firebase.auth().currentUser;
     }
 }
