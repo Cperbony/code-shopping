@@ -25,13 +25,7 @@ export class LoginPhoneNumberPage {
     }
 
     ionViewDidLoad() {
-        this.firebaseAuth.getUser()
-            .then((user) => {
-               console.log(user);
-               //Outra forma d epegar o usuário, uma vez capturado o usuário
-                //Conseguimos pegar pelo currentUser
-               // console.log(this.firebaseAuth.firebase.auth().currentUser);
-            });
+        this.firebaseAuth.getToken().then((token) => console.log(token), (error) => console.log(error));
         this.firebaseAuth.makePhoneNumberForm('#firebase-ui');
     }
 }
