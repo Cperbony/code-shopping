@@ -22,35 +22,45 @@ import {MainPage} from "../main/main";
 })
 export class LoginPhoneNumberPage {
 
-    constructor(public navCtrl: NavController, public navParams: NavParams,
+    constructor(public navCtrl: NavController,
+                public navParams: NavParams,
                 private firebaseAuth: FirebaseAuthProvider,
                 private authService: AuthProvider) {
     }
 
     ionViewDidLoad() {
-        const unsubscribed = this.firebaseAuth.firebase.auth().onAuthStateChanged((user) => {
-            console.log(user);
-           if(user){
-               this.authService
-                   .login()
-                   .subscribe((token) => {
-                       console.log('redirecionar para o main');
-                       this.redirectToMainPage();
-                   }, (responseError) => {
-                       //redirecionar para a criação de conta cliente
-                       console.log('redirecionar para a criação da conta do cliente');
-                   });
-               unsubscribed();
-           }
-        });
+        const unsubscribed = this.firebaseAuth.firebase.auth()
+            .onAuthStateChanged((user) => {
+                console.log(user);
+                console.log(this.firebaseAuth.firebase.auth().currentUser);
+                if (user) {
+                    this.extractedAuthUser();
+                    unsubscribed();
+                }
+            });
         this.firebaseAuth.makePhoneNumberForm('#firebase-ui');
     }
 
-    redirectToMainPage(){
+    private extractedAuthUser() {
+        this.authService
+            .login()
+            .subscribe((token) => {
+                console.log('redirecionar para o main');
+                this.redirectToMainPage();
+            }, (responseError) => {
+                // this.firebaseAuth.makePhoneNumberForm('#firebase-ui')
+                //     .then(() => {
+                //         this.extractedAuthUser();
+                //     });
+                console.log('redirecionar para a criação da conta do cliente');
+            });
+    }
+
+    redirectToMainPage() {
         this.navCtrl.setRoot(MainPage);
     }
 
-    redirectToCustomerCreatePage(){
+    redirectToCustomerCreatePage() {
         // this.navCtrl.setRoot(MainPage);
     }
 }

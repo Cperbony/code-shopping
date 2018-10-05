@@ -16,7 +16,7 @@ export class AuthProvider {
 
     constructor(public http: HttpClient,
                 private firebaseAuth: FirebaseAuthProvider) {
-        console.log('Hello AuthProvider Provider');
+        // console.log('Hello AuthProvider Provider');
     }
 
     login(): Observable<{ token: string }> {

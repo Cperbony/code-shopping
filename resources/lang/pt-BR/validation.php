@@ -112,6 +112,8 @@ return [
     'uploaded'             => 'Falha no Upload do arquivo :attribute.',
     'url'                  => 'O formato da URL informada para o campo :attribute é inválido.',
 
+    'phonenumberunique' => 'O número de telefone informado já esta em uso e deve ser único no sistema.',
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

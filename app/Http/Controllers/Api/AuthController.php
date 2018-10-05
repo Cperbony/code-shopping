@@ -21,11 +21,8 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $this->validateLogin($request);
-
         $credentials = $this->credentials($request);
-
         $token = \JWTAuth::attempt($credentials);
-
         return $this->responseToken($token);
     }
 
@@ -42,11 +39,9 @@ class AuthController extends Controller
         /** @var FirebaseAuth $firebaseAuth */
         $firebaseAuth = app(FirebaseAuth::class);
         $user = $firebaseAuth->user($request->token);
-        $profile = (new UserProfile)->where('phone_number', $user->phoneNumber)
-            ->first();
+        $profile = UserProfile::where('phone_number', $user->phoneNumber)->first();
         $token = null;
         if ($profile) {
-            /** @var UserProfile $profile */
             $token = \Auth::guard('api')->login($profile->user);
         }
         return $this->responseToken($token);

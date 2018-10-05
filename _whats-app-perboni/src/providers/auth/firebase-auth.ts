@@ -15,6 +15,8 @@ declare const firebaseui;
 @Injectable()
 export class FirebaseAuthProvider {
 
+    private ui;
+
     constructor() {
         firebase.initializeApp(firebaseConfig);
         console.log('Hello FirebaseAuthProvider Provider');
@@ -24,21 +26,38 @@ export class FirebaseAuthProvider {
         return firebase;
     }
 
-    async makePhoneNumberForm(selectorElement: string) {
-        const firebaseui = await this.getFirebaseUI();
+    async makePhoneNumberForm(selectorElement: string): Promise<any> {
+        // const firebaseui = await this.getFirebaseUI();
         await this.getFirebaseUI();
-        const uiConfig = {
-            signInOptions: [
-                firebase.auth.PhoneAuthProvider.PROVIDER_ID
-            ],
-            callbacks: {
-                signInSuccessWithAuthResult: (authResult, redirectUrl) => {
-                    return false;
+        return new Promise<any>(resolve => {
+            const uiConfig = {
+                signInOptions: [
+                    firebase.auth.PhoneAuthProvider.PROVIDER_ID
+                ],
+                callbacks: {
+                    signInSuccessWithAuthResult: (authResult, redirectUrl) => {
+                        resolve(true);
+                        return false;
+                    }
                 }
-            }
-        };
-        const ui = new firebaseui.auth.AuthUI(firebase.auth());
-        ui.start(selectorElement, uiConfig);
+            };
+            this.makeFormFirebaseUi(selectorElement, uiConfig);
+        });
+    }
+
+    private makeFormFirebaseUi(selectorElement, uiConfig) {
+        if (!this.ui) {
+            this.uiStart(selectorElement, uiConfig);
+        } else {
+            this.ui.delete().then(() => {
+                this.uiStart(selectorElement, uiConfig);
+            });
+        }
+    }
+
+    private uiStart(selectorElement, uiConfig) {
+        this.ui = new firebaseui.auth.AuthUI(firebase.auth());
+        this.ui.start(selectorElement, uiConfig);
     }
 
     //Sistema de promessa JS, Assícrona
@@ -53,6 +72,8 @@ export class FirebaseAuthProvider {
             scriptjs('https://www.gstatic.com/firebasejs/ui/3.4.1/firebase-ui-auth__pt.js', () => {
                 console.log('Carregou FirebaseUI');
                 resolve(firebaseui);
+            }, (responseError) => {
+                reject(responseError);
             });
         });
     }
@@ -81,6 +102,7 @@ export class FirebaseAuthProvider {
                 .auth()
                 .onAuthStateChanged(
                     (user) => {
+                        console.log('getUser' + user);
                         resolve(user);
                         unsubscribed();
                     },
