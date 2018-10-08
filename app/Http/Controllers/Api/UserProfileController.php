@@ -21,8 +21,9 @@ class UserProfileController extends Controller
             $token = $request->token;
             $data['phone_number'] = $this->getPhoneNumber($token);
         }
-
-        $data['photo'] = $data['photo'] ?? null;
+        if($request->has('remove_photo')){
+            $data['photo'] = null;
+        }
         $user = \Auth::guard('api')->user();
         $user->updateWithProfile($data);
         return new userResource($user);

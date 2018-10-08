@@ -18,8 +18,8 @@ class UserProfile extends Model
 
     public static function saveProfile(User $user, $data = array()): UserProfile
     {
-        self::deletePhoto($user->profile);
-        if(array_key_exists('photo', $data)){
+        if (array_key_exists('photo', $data)) {
+            self::deletePhoto($user->profile);
             $data['photo'] = UserProfile::getPhotoHashName($data['photo']);
         }
         $user->profile->fill($data)->save();
@@ -31,8 +31,9 @@ class UserProfile extends Model
         return $photo ? $photo->hashName() : null;
     }
 
-    private static function deletePhoto(UserProfile $profile){
-        if(!$profile->photo){
+    private static function deletePhoto(UserProfile $profile)
+    {
+        if (!$profile->photo) {
             return;
         }
         $dir = self::photoDir();
@@ -56,12 +57,12 @@ class UserProfile extends Model
 
     public static function deleteFile(UploadedFile $photo = null)
     {
-        if(!$photo){
+        if (!$photo) {
             return;
         }
         $path = self::photosPath();
         $photoPath = "{$path}/{$photo->hashName()}";
-        if(file_exists($photoPath)){
+        if (file_exists($photoPath)) {
             \File::delete($photoPath);
         }
     }

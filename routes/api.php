@@ -58,6 +58,6 @@ Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
                 ['except' => ['create', 'edit']]);
         });
 
-        
+
     });
 });
