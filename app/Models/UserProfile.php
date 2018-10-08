@@ -12,14 +12,16 @@ class UserProfile extends Model
     const BASE_PATH = 'app/public';
     const DIR_USERS = 'users';
     const DIR_USER_PHOTO = self::DIR_USERS . '/photos';
-
     const USER_PHOTO_PATH = self::BASE_PATH . '/' . self::DIR_USER_PHOTO;
 
     protected $fillable = ['photo', 'phone_number'];
 
-    public static function saveProfile(User $user, array $data): UserProfile
+    public static function saveProfile(User $user, $data = array()): UserProfile
     {
-        $data['photo'] = UserProfile::getPhotoHashName($data['photo']);
+        self::deletePhoto($user->profile);
+        if(array_key_exists('photo', $data)){
+            $data['photo'] = UserProfile::getPhotoHashName($data['photo']);
+        }
         $user->profile->fill($data)->save();
         return $user->profile;
     }
@@ -27,6 +29,14 @@ class UserProfile extends Model
     private static function getPhotoHashName(UploadedFile $photo = null)
     {
         return $photo ? $photo->hashName() : null;
+    }
+
+    private static function deletePhoto(UserProfile $profile){
+        if(!$profile->photo){
+            return;
+        }
+        $dir = self::photoDir();
+        \Storage::disk('public')->delete("{$dir}/{$profile->photo}");
     }
 
     public static function photosPath()
@@ -40,7 +50,7 @@ class UserProfile extends Model
         if (!$photo) {
             return;
         }
-        $dir = self::photosDir();
+        $dir = self::photoDir();
         $photo->store($dir, ['disk' => 'public']);
     }
 
@@ -56,7 +66,7 @@ class UserProfile extends Model
         }
     }
 
-    public static function photosDir()
+    public static function photoDir()
     {
         $dir = self::USER_PHOTO_PATH;
         return $dir;

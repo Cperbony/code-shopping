@@ -16,7 +16,6 @@ class AddRoleFieldToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->unsignedSmallInteger('role')->default(User::ROLE_SELLER);
-            //
         });
     }
 

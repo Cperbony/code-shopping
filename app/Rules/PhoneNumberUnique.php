@@ -9,38 +9,28 @@ use Illuminate\Contracts\Validation\Rule;
 class PhoneNumberUnique implements Rule
 {
     /**
-     * @var null
-     */
-    private $ignoredUserId;
-
-    /**
      * Create a new rule instance.
      *
-     * @return void
      */
-    public function __construct($ignoredUserId = null)
+    public function __construct()
     {
-
-        $this->ignoredUserId = $ignoredUserId;
     }
 
     /**
      * Determine if the validation rule passes.
      *
-     * @param  string  $attribute
-     * @param  mixed  $value
+     * @param  string $attribute
+     * @param $tokenValue
      * @return bool
      */
-    public function passes($attribute, $value)
+    public function passes($attribute, $tokenValue)
     {
         $firebaseAuth = app(FirebaseAuth::class);
-        try{
-            $phoneNumber = $firebaseAuth->phoneNumber($value);
+        try {
+            $phoneNumber = $firebaseAuth->phoneNumber($tokenValue);
             $query = (new UserProfile)->where('phone_number', $phoneNumber);
-
             $profile = $query->first();
-            $userWithIgnoredId = $this->ignoredUserId != null && $this->ignoredUserId == $profile->user->id;
-            return is_null($profile) || ($userWithIgnoredId);
+            return $profile == null;
         } catch (\Exception $e) {
             return false;
         }

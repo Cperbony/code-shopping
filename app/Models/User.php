@@ -36,6 +36,11 @@ class User extends Authenticatable implements JWTSubject
         'password', 'remember_token',
     ];
 
+    /**
+     * @param array $data
+     * @return User
+     * @throws \Exception
+     */
     public static function createCustomer(array $data): User
     {
         try {
@@ -60,6 +65,24 @@ class User extends Authenticatable implements JWTSubject
         $user->role = User::ROLE_CUSTOMER;
         $user->save();
         return $user;
+    }
+
+    public function updateWithProfile(array $data): User
+    {
+        try {
+            UserProfile::uploadPhoto($data['photo']);
+            \DB::beginTransaction();
+            $this->fill($data);
+            $this->save();
+            UserProfile::saveProfile($this, $data);
+            \DB::commit();
+        } catch (\Exception $e) {
+            //excluir a photo
+            UserProfile::deleteFile($data['photo']);
+            \DB::rollBack();
+            throw $e;
+        }
+        return $this;
     }
 
 //    public static function createCustom($attributes = array())

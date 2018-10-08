@@ -5,7 +5,6 @@ namespace CodeShopping\Http\Controllers\Api;
 use CodeShopping\Firebase\Auth as FirebaseAuth;
 use CodeShopping\Http\Requests\CustomerRequest;
 use CodeShopping\Models\User;
-use Illuminate\Http\Request;
 use CodeShopping\Http\Controllers\Controller;
 
 class CustomerController extends Controller
