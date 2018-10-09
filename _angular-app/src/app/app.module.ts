@@ -50,6 +50,7 @@ import {ProductOutputFormComponent} from './components/pages/product-output/prod
 import {ProductOutputSearchComponent} from './components/pages/product-output/product-output-search/product-output-search.component';
 import {ProductSearchFormComponent} from './components/pages/product/product-search-form/product-search-form.component';
 import { ProductIdAutocompleteComponent } from './components/select2-fields/product-id-autocomplete/product-id-autocomplete.component';
+import { UserProfileComponent } from './components/pages/user-profile/user-profile.component';
 
 function jwtFactory(authService: AuthService) {
     return {
@@ -106,6 +107,7 @@ function jwtFactory(authService: AuthService) {
         ProductOutputSearchComponent,
         ProductSearchFormComponent,
         ProductIdAutocompleteComponent,
+        UserProfileComponent,
     ],
     imports: [
         BrowserModule,

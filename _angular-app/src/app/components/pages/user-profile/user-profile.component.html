@@ -1,0 +1,33 @@
+<div class="row">
+    <h1>Atualizar Perfil</h1>
+    <div class="col-md-12">
+        <card-error *ngIf="showErrors()">
+            <list-error [errors]="errors"></list-error>
+        </card-error>
+    </div>
+    <div class="col-md-12">
+        <form (submit)="submit()" [formGroup]="form">
+            <div class="form-group">
+                <label for="name">Nome</label>
+                <input type="text" class="form-control" id="name" formControlName="name">
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" class="form-control" id="email" formControlName="email">
+            </div>
+            <div class="form-group">
+                <label for="password">Senha</label>
+                <input type="password" class="form-control" id="password" formControlName="password">
+            </div>
+            <div class="form-group">
+                <label for="name">Telefone</label>
+                <input type="text" class="form-control" readonly formControlName="phone_number">
+            </div>
+            <div class="form-group">
+                <label for="photo">Foto do Perfil</label>
+                <input type="file" class="form-control" id="photo" (change)="onChoosePhoto($event.target.files)">
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Salvar</button>
+        </form>
+    </div>
+</div>

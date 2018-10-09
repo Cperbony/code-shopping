@@ -9,6 +9,7 @@ import {ProductListComponent} from "./components/pages/product/product-list/prod
 import {ProductInputListComponent} from "./components/pages/product-input/product-input-list/product-input-list.component";
 import {ProductPhotoManagerComponent} from "./components/pages/product-photo/product-photo-manager/product-photo-manager.component";
 import {ProductOutputListComponent} from "./components/pages/product-output/product-output-list/product-output-list.component";
+import {UserProfileComponent} from "./components/pages/user-profile/user-profile.component";
 
 const routes: Routes = [
     {
@@ -47,6 +48,11 @@ const routes: Routes = [
     {
         path: 'users/list',
         component: UserListComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'profile',
+        component: UserProfileComponent,
         canActivate: [AuthGuard]
     },
     {
