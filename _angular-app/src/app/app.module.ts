@@ -51,6 +51,7 @@ import {ProductOutputSearchComponent} from './components/pages/product-output/pr
 import {ProductSearchFormComponent} from './components/pages/product/product-search-form/product-search-form.component';
 import { ProductIdAutocompleteComponent } from './components/select2-fields/product-id-autocomplete/product-id-autocomplete.component';
 import { UserProfileComponent } from './components/pages/user-profile/user-profile.component';
+import { PhoneNumberAuthModalComponent } from './components/common/phone-number-auth-modal/phone-number-auth-modal.component';
 
 function jwtFactory(authService: AuthService) {
     return {
@@ -108,6 +109,7 @@ function jwtFactory(authService: AuthService) {
         ProductSearchFormComponent,
         ProductIdAutocompleteComponent,
         UserProfileComponent,
+        PhoneNumberAuthModalComponent,
     ],
     imports: [
         BrowserModule,

@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {NotifyMessageService} from "../../../services/notify-message.service";
 import {UserProfileHttpService} from "../../../services/http/user-profile-http.service";
 import {AuthService} from "../../../services/auth.service";
+import {PhoneNumberAuthModalComponent} from "../../common/phone-number-auth-modal/phone-number-auth-modal.component";
 
 @Component({
     selector: 'app-user-profile',
@@ -14,6 +15,9 @@ export class UserProfileComponent implements OnInit {
     form: FormGroup;
     errors = {};
     has_photo: boolean;
+
+    @ViewChild(PhoneNumberAuthModalComponent)
+    phoneNumberAuthModal: PhoneNumberAuthModalComponent;
 
     constructor(private formBuilder: FormBuilder,
                 private userProfileHttp: UserProfileHttpService,
@@ -47,16 +51,16 @@ export class UserProfileComponent implements OnInit {
                     this.notifyMessage.success('Perfil Atualizado com Sucesso');
                     console.log(data);
                 },
-                        (responseError) => {
-                            if (responseError.status === 422) {
-                                this.errors = responseError.error.errors
-                                console.log(responseError);
-                            }
+                (responseError) => {
+                    if (responseError.status === 422) {
+                        this.errors = responseError.error.errors
+                        console.log(responseError);
+                    }
                 });
         return false;
     }
 
-    setHasPhoto(){
+    setHasPhoto() {
         this.has_photo = this.authService.me.profile.has_photo;
     }
 
@@ -67,9 +71,13 @@ export class UserProfileComponent implements OnInit {
         this.form.get('photo').setValue(files[0]);
     }
 
-    removePhoto(){
+    removePhoto() {
         this.form.get('photo').setValue(null);
         this.has_photo = false;
+    }
+
+    openPhoneNumberAuthModal() {
+        this.phoneNumberAuthModal.showModal();
     }
 
     showErrors() {

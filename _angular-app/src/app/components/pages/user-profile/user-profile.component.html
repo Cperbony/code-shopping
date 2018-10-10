@@ -20,28 +20,42 @@
                 <input type="password" class="form-control" id="password" formControlName="password">
             </div>
             <div class="form-group">
-                <label for="name">Telefone</label>
-                <input type="text" class="form-control" readonly formControlName="phone_number">
-            </div>
-            <div class="form-group">
-                <label for="photo">Foto do Perfil</label>
-                <input type="file" class="form-control" id="photo" (change)="onChoosePhoto($event.target.files)">
-                <div class="row col-md-12" style="margin-top: 5px">
-                    <button type="button" class="btn btn-danger"
-                            [hidden]="!has_photo"
-                            (click)="removePhoto()">
-                        Remover foto do perfil
-                    </button>
-                    <div class="alert alert-info"
-                         [hidden]="has_photo || !authService.me.profile.has_photo">
-                        Para remover a foto salve o formulário
+                <label>Telefone</label>
+                <div class="input-group">
+                    <input type="text" class="form-control"
+                           readonly formControlName="phone_number">
+                    <div class="input-group-append">
+                        <button class="btn btn-info" type="button"
+                                (click)="openPhoneNumberAuthModal()">Novo
+                        </button>
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary"
-                    [disabled]="!form.valid">
-                Salvar
-            </button>
+            <div class="form-group">
+                <label for="photo">Foto do Perfil</label>
+                <input type="file" class="form-control" id="photo"
+                       (change)="onChoosePhoto($event.target.files)">
+
+                <div class="input-group">
+                    <div class="row col-md-12" style="margin-top: 20px">
+                        <div class="row">
+                            <button type="button" class="btn btn-danger"
+                                    [hidden]="!has_photo"
+                                    (click)="removePhoto()">
+                                Remover foto do perfil
+                            </button>
+                            <div class="alert alert-info"
+                                 [hidden]="has_photo || !authService.me.profile.has_photo">
+                                Para remover a foto salve o formulário
+                            </div>
+                            <button type="submit" class="btn btn-primary"
+                                    [disabled]="!form.valid">
+                                Salvar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
 </div>
