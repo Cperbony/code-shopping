@@ -11,7 +11,7 @@ class UserProfileController extends Controller
 {
     /**
      * @param Request $request
-     * @return UserResource
+     * @return array
      */
     public function update(Request $request)
     {
@@ -26,7 +26,12 @@ class UserProfileController extends Controller
         }
         $user = \Auth::guard('api')->user();
         $user->updateWithProfile($data);
-        return new userResource($user);
+        $resource = new userResource($user);
+        $newToken = \Auth::guard('api')->login($user);
+        return [
+            'user' => $resource->toArray($request),
+            'token' => $newToken
+        ];
     }
 
     private function getPhoneNumber($token)

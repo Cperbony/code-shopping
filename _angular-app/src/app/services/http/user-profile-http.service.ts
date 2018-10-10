@@ -3,7 +3,8 @@ import {environment} from "../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/internal/Observable";
 import {User} from "../../models";
-import {map} from "rxjs/operators";
+import {tap} from "rxjs/operators";
+import {AuthService} from "../auth.service";
 
 interface Profile {
     name?: string;
@@ -20,16 +21,19 @@ export class UserProfileHttpService {
 
     private baseUrl = `${environment.api.url}/profile`;
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient,
+                private authService: AuthService) {
     }
 
-    update(data: Profile): Observable<User> {
+    update(data: Profile): Observable<{ user: User, token: string }> {
         const formData = this.formDataToSend(data);
 
         return this.http
-            .post<{ data: User }>(this.baseUrl, formData)
+            .post<{ user: User, token: string }>(this.baseUrl, formData)
             .pipe(
-                map(response => response.data)
+                tap(response => {
+                    this.authService.setToken(response.token);
+                })
             );
     }
 
