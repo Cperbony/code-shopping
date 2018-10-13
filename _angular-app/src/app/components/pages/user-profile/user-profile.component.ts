@@ -5,6 +5,7 @@ import {UserProfileHttpService} from "../../../services/http/user-profile-http.s
 import {AuthService} from "../../../services/auth.service";
 import {PhoneNumberAuthModalComponent} from "../../common/phone-number-auth-modal/phone-number-auth-modal.component";
 import {FirebaseAuthService} from "../../../services/firebase-auth.service";
+import fieldsOptions from "./user-profile-fields";
 
 @Component({
     selector: 'app-user-profile',
@@ -27,9 +28,15 @@ export class UserProfileComponent implements OnInit {
                 private firebaseAuth: FirebaseAuthService
     ) {
         this.form = this.formBuilder.group({
-            name: ['', [Validators.maxLength(255)]],
-            email: ['', [Validators.email, Validators.maxLength(255)]],
-            password: ['', [Validators.minLength(4), Validators.maxLength(16)]],
+            name: ['',
+                [Validators.maxLength(255)
+                ]],
+            email: ['',
+                [Validators.email, Validators.maxLength(255)
+                ]],
+            password: ['',
+                [Validators.minLength(4), Validators.maxLength(16)
+                ]],
             phone_number: null,
             token: null,
             photo: false
@@ -40,6 +47,10 @@ export class UserProfileComponent implements OnInit {
     }
 
     ngOnInit() {
+    }
+
+    get fieldsOptions(): any {
+        return fieldsOptions;
     }
 
     submit() {
