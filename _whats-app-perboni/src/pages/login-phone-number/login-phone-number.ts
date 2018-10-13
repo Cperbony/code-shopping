@@ -29,15 +29,16 @@ export class LoginPhoneNumberPage {
     }
 
     ionViewDidLoad() {
+        this.firebaseAuth.getToken().then(token => console.log(token));
         const unsubscribed = this.firebaseAuth.firebase.auth()
             .onAuthStateChanged((user) => {
                 console.log(user);
                 console.log(this.firebaseAuth.firebase.auth().currentUser);
                 if (user) {
                     this.extractedAuthUser();
-                    unsubscribed();
                 }
             });
+        unsubscribed();
         this.firebaseAuth.makePhoneNumberForm('#firebase-ui');
     }
 

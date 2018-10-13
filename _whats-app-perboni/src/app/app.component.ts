@@ -1,11 +1,12 @@
-import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import {Component, ViewChild} from '@angular/core';
+import {Nav, Platform} from 'ionic-angular';
+import {StatusBar} from '@ionic-native/status-bar';
+import {SplashScreen} from '@ionic-native/splash-screen';
 
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
-import {LoginOptionsPage} from "../pages/login-options/login-options";
+import {HomePage} from '../pages/home/home';
+import {ListPage} from '../pages/list/list';
+import {LoginPhoneNumberPage} from "../pages/login-phone-number/login-phone-number";
+import {CustomerCreatePage} from "../pages/customer-create/customer-create";
 
 @Component({
   templateUrl: 'app.html'
@@ -13,7 +14,7 @@ import {LoginOptionsPage} from "../pages/login-options/login-options";
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = LoginOptionsPage;
+  rootPage: any = CustomerCreatePage;
 
   pages: Array<{title: string, component: any}>;
 

@@ -118,4 +118,8 @@ export class FirebaseAuthService {
     private getCurrentUser(): firebase.User | null {
         return this.firebase.auth().currentUser;
     }
+
+    logout(): Promise<any>{
+       return this.firebase.auth().signOut();
+    }
 }
