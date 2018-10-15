@@ -2,9 +2,11 @@
 
 namespace CodeShopping\Http\Requests;
 
+use CodeShopping\Rules\FirebaseTokenVerification;
+use CodeShopping\Rules\PhoneNumberUnique;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserRequest extends FormRequest
+class PhoneNumberToUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,12 +25,12 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->route('user');
-
         return [
-            'name' => 'required|max:255',
-            'email' => "required|max:255|email|unique:users,email,{$id}",
-            'password' => 'required|min:4|max:16'
+            'email' => 'required|email|exists:users,email',
+            'token' => [
+                new FirebaseTokenVerification(),
+                new PhoneNumberUnique()
+            ]
         ];
     }
 }

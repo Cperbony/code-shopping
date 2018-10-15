@@ -35,7 +35,6 @@ export class CustomerCreatePage {
                 [Validators.required,
                     Validators.email, Validators.maxLength(255)]],
             photo: null
-
         })
     }
 
@@ -48,7 +47,6 @@ export class CustomerCreatePage {
             .create(this.form.value)
             .subscribe(() => {
                 console.log('Cliente foi criado');
-
             });
     }
 
@@ -74,5 +72,4 @@ export class CustomerCreatePage {
             this.photoPreview = (<any>target).result;
         }
     }
-
 }

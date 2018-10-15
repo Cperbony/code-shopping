@@ -29,13 +29,15 @@ export class FirebaseAuthProvider {
     async makePhoneNumberForm(selectorElement: string): Promise<any> {
         // const firebaseui = await this.getFirebaseUI();
         await this.getFirebaseUI();
-        return new Promise<any>(resolve => {
+        return new Promise<any>((resolve) => {
             const uiConfig = {
                 signInOptions: [
                     firebase.auth.PhoneAuthProvider.PROVIDER_ID
                 ],
                 callbacks: {
                     signInSuccessWithAuthResult: (authResult, redirectUrl) => {
+                        console.log(authResult);
+                        console.log(redirectUrl);
                         resolve(true);
                         return false;
                     }
@@ -102,7 +104,7 @@ export class FirebaseAuthProvider {
                 .auth()
                 .onAuthStateChanged(
                     (user) => {
-                        console.log('getUser' + user);
+                        // console.log('getUser' + user);
                         resolve(user);
                         unsubscribed();
                     },

@@ -34,13 +34,13 @@ class UsersTableSeeder extends Seeder
                 'email' => 'customer@user.com',
                 'role' => User::ROLE_CUSTOMER
             ])
-            ->each(function ($user) {
-                Model::reguard();
+            ->each(function (User $user) {
+                User::reguard();
                 $user->updateWithProfile([
                     'phone_number' => '+16505551235',
                     'photo' => $this->getCustomersPhoto()
                 ]);
-                Model::unguard();
+                User::unguard();
             });
 
 

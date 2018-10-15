@@ -14,7 +14,7 @@ import {CustomerCreatePage} from "../pages/customer-create/customer-create";
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = CustomerCreatePage;
+  rootPage: any = LoginPhoneNumberPage;
 
   pages: Array<{title: string, component: any}>;
 

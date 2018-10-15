@@ -4,7 +4,7 @@ namespace CodeShopping\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserRequest extends FormRequest
+class ChatGroupUpdateRequest extends ChatGroupCreateRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,12 +23,13 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->route('user');
+        $rules = parent::rules();
+        $this->removeRulesRequiredFromPhoto($rules);
+        return $rules;
+    }
 
-        return [
-            'name' => 'required|max:255',
-            'email' => "required|max:255|email|unique:users,email,{$id}",
-            'password' => 'required|min:4|max:16'
-        ];
+    private function removeRulesRequiredFromPhoto(array &$rules)
+    {
+        $rules['photo'] = str_replace('required|', '', $rules['photo']);
     }
 }

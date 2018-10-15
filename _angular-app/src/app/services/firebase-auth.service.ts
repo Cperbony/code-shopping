@@ -29,7 +29,7 @@ export class FirebaseAuthService {
     }
 
     async makePhoneNumberForm(selectorElement: string): Promise<any> {
-        // const firebaseui = await this.getFirebaseUI();
+        const firebaseui = await this.getFirebaseUI();
         await this.getFirebaseUI();
         return new Promise<any>(resolve => {
             const uiConfig = {
@@ -104,7 +104,7 @@ export class FirebaseAuthService {
                 .auth()
                 .onAuthStateChanged(
                     (user) => {
-                        console.log('getUser' + user);
+                        console.log('getUser ' + user);
                         resolve(user);
                         unsubscribed();
                     },

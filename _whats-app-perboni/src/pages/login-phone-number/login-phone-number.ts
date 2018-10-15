@@ -4,6 +4,7 @@ import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {FirebaseAuthProvider} from "../../providers/auth/firebase-auth";
 import {AuthProvider} from "../../providers/auth/auth";
 import {MainPage} from "../main/main";
+import {CustomerCreatePage} from "../customer-create/customer-create";
 
 // declare const firebaseui;
 // (<any>window).firebase = firebase;
@@ -28,33 +29,44 @@ export class LoginPhoneNumberPage {
                 private authService: AuthProvider) {
     }
 
+    //Se autenticado, direcionado para o Main
+    //Carregar o firebaseui-form
+    //Tiver autenticado, redireciona para o main page ou para o customercreatepage
+    //Se voltar, carregar novamente o firebaseui-form. Mas como ?????
+
     ionViewDidLoad() {
         this.firebaseAuth.getToken().then(token => console.log(token));
+        const currentUser = this.firebaseAuth.firebase.auth().currentUser;
         const unsubscribed = this.firebaseAuth.firebase.auth()
             .onAuthStateChanged((user) => {
                 console.log(user);
-                console.log(this.firebaseAuth.firebase.auth().currentUser);
+                console.log(currentUser);
                 if (user) {
-                    this.extractedAuthUser();
+                    this.handleAuthUser();
+                    unsubscribed();
                 }
             });
-        unsubscribed();
-        this.firebaseAuth.makePhoneNumberForm('#firebase-ui');
+        this.loadForm();
     }
 
-    private extractedAuthUser() {
+    handleAuthUser(){
         this.authService
             .login()
             .subscribe((token) => {
                 console.log('redirecionar para o main');
+                console.log(token);
                 this.redirectToMainPage();
             }, (responseError) => {
-                // this.firebaseAuth.makePhoneNumberForm('#firebase-ui')
-                //     .then(() => {
-                //         this.extractedAuthUser();
-                //     });
+                this.firebaseAuth.makePhoneNumberForm('#firebase-ui')
+                    .then(()=>this.handleAuthUser());
+                this.redirectToCustomerCreatePage();
+                console.log(responseError);
                 console.log('redirecionar para a criação da conta do cliente');
             });
+    }
+
+    loadForm(){
+        this.firebaseAuth.makePhoneNumberForm('#firebase-ui');
     }
 
     redirectToMainPage() {
@@ -62,6 +74,6 @@ export class LoginPhoneNumberPage {
     }
 
     redirectToCustomerCreatePage() {
-        // this.navCtrl.setRoot(MainPage);
+        this.navCtrl.push(CustomerCreatePage);
     }
 }

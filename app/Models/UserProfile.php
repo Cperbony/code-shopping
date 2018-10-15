@@ -16,6 +16,24 @@ class UserProfile extends Model
 
     protected $fillable = ['photo', 'phone_number'];
 
+    public static function createTokenToChangePhoneNumber(UserProfile $profile, $phoneNumber): string
+    {
+        $token = base64_encode($phoneNumber);
+        $profile->phone_number_token_to_change = $token;
+        $profile->save();
+        return $token;
+    }
+
+    public static function updatePhoneNumber($token): UserProfile
+    {
+        $profile = (new UserProfile)->where('phone_number_token_to_change', $token)->firstOrFail();
+        $phoneNumber = base64_decode($token);
+        $profile->phone_number = $phoneNumber;
+        $profile->phone_number_token_to_change = null;
+        $profile->save();
+        return $profile;
+    }
+
     public static function saveProfile(User $user, $data = array()): UserProfile
     {
         if (array_key_exists('photo', $data)) {
@@ -69,7 +87,7 @@ class UserProfile extends Model
 
     public static function photoDir()
     {
-        $dir = self::USER_PHOTO_PATH;
+        $dir = self::DIR_USER_PHOTO;
         return $dir;
     }
 
