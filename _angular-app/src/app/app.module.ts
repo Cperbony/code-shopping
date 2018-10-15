@@ -52,6 +52,11 @@ import {ProductSearchFormComponent} from './components/pages/product/product-sea
 import { ProductIdAutocompleteComponent } from './components/select2-fields/product-id-autocomplete/product-id-autocomplete.component';
 import { UserProfileComponent } from './components/pages/user-profile/user-profile.component';
 import { PhoneNumberAuthModalComponent } from './components/common/phone-number-auth-modal/phone-number-auth-modal.component';
+import { ChatGroupDeleteModalComponent } from './components/pages/chat-group/chat-group-delete-modal/chat-group-delete-modal.component';
+import { ChatGroupEditModalComponent } from './components/pages/chat-group/chat-group-edit-modal/chat-group-edit-modal.component';
+import { ChatGroupFormComponent } from './components/pages/chat-group/chat-group-form/chat-group-form.component';
+import { ChatGroupListComponent } from './components/pages/chat-group/chat-group-list/chat-group-list.component';
+import { ChatGroupNewModalComponent } from './components/pages/chat-group/chat-group-new-modal/chat-group-new-modal.component';
 
 function jwtFactory(authService: AuthService) {
     return {
@@ -110,6 +115,11 @@ function jwtFactory(authService: AuthService) {
         ProductIdAutocompleteComponent,
         UserProfileComponent,
         PhoneNumberAuthModalComponent,
+        ChatGroupDeleteModalComponent,
+        ChatGroupEditModalComponent,
+        ChatGroupFormComponent,
+        ChatGroupListComponent,
+        ChatGroupNewModalComponent,
     ],
     imports: [
         BrowserModule,

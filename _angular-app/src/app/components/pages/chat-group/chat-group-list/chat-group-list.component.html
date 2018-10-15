@@ -1,0 +1,59 @@
+<div class="row">
+  <h1>Listagem de Produtos</h1>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <td>
+        <button class="btn btn-primary" (click)="chatGroupInsertService.showModalInsert()">Novo Grupo
+        </button>
+      </td>
+      <td colspan="4"></td>
+    </tr>
+    <tr>
+      <th style="width: 5%">ID</th>
+      <th style="width: 60%">Nome</th>
+      <th style="width: 10%">Usuários</th>
+      <th style="width: 10%">Criado em</th>
+      <th style="width: 10%">Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let chatGroup of chatGroups | paginate: {itemsPerPage: 5, currentPage: pagination.page, totalItems: pagination.totalItems }">
+      <td>{{ chatGroup.id }}</td>
+      <td>{{ chatGroup.name }}</td>
+      <td>{{ chatGroup.count_users }}</td>
+      <td>{{ chatGroup.created_at.date | date: 'dd/MM/yyyy' }}</td>
+      <td>
+        <a href="javascript:void(0)" (click)="chatGroupEditService.showModalEdit(chatGroup.id)">
+          <i class="fas fa-edit">&nbsp;|&nbsp;</i>
+        </a>
+        <a href="javascript:void(0)" (click)="chatGroupDeleteService.showModalDelete(chatGroup.id)">
+          <i class="fas fa-trash-alt">&nbsp;</i>
+        </a>
+        <a [routerLink]="['/chatGroups', chatGroup.id, 'categories', 'list']"> Categorias</a> |
+        <a [routerLink]="['/chatGroups', chatGroup.id, 'photos', 'manager']">Fotos</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <pagination-controls (pageChange)="pageChanged($event)"
+                       previousLabel="Anterior"
+                       nextLabel="Próxima">
+  </pagination-controls>
+
+</div>
+<chat-group-new-modal
+        (onSuccess)="chatGroupInsertService.onInsertSuccess($event)"
+        (onError)="chatGroupInsertService.onInsertError($event)">
+</chat-group-new-modal>
+
+<chat-group-edit-modal [chatGroupId]="chatGroupId"
+                    (onSuccess)="chatGroupEditService.onEditSuccess($event)"
+                    (onError)="chatGroupEditService.onEditError($event)">
+</chat-group-edit-modal>
+
+<chat-group-delete-modal [productId]="productId"
+                      (onSuccess)="chatGroupDeleteService.onDeleteSuccess($event)"
+                      (onError)="chatGroupDeleteService.onDeleteError($event)">
+</chat-group-delete-modal>

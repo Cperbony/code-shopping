@@ -1,0 +1,20 @@
+<form (submit)="submit()">
+    <modal (onHide)="hideModal($event)">
+        <h5 modal-title>Novo Grupo</h5>
+
+        <div modal-body>
+            <card-error *ngIf="showErrors()">
+                <list-error [errors]="errors"></list-error>
+            </card-error>
+
+            <chat-group-form [form]="form"></chat-group-form>
+        </div>
+
+        <div modal-footer>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            <button type="submit" class="btn btn-primary"
+                    [disabled]="!form.valid">Incluir
+            </button>
+        </div>
+    </modal>
+</form>
