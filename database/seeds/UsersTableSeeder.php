@@ -19,15 +19,14 @@ class UsersTableSeeder extends Seeder
             ->create([
                 'email' => 'admin@user.com'
             ])
-            ->each(function ($user) {
-                Model::reguard();
+            ->each(function (User $user) {
+                User::reguard();
                 $user->updateWithProfile([
                     'phone_number' => '+16505551234',
                     'photo' => $this->getAdminPhoto()
                 ]);
-                Model::unguard();
+                User::unguard();
             });
-
 
         factory(User::class, 1)
             ->create([
@@ -43,8 +42,7 @@ class UsersTableSeeder extends Seeder
                 User::unguard();
             });
 
-
-        factory(User::class, 50)
+        factory(User::class, 20)
             ->create([
                 'role' => User::ROLE_CUSTOMER
             ]);

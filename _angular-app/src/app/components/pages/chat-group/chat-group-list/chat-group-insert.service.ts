@@ -22,13 +22,13 @@ export class ChatGroupInsertService {
     }
 
     onInsertSuccess($event: any) {
-        this.notifyMessage.success('Chat Grupo cadastrado com sucesso!');
+        this.notifyMessage.success('O Grupo foi cadastrado com sucesso!');
         console.log($event);
         this._chatGroupListComponent.getChatGroups();
     }
 
     onInsertError($event: HttpErrorResponse) {
-        this.notifyMessage.error('Não foi possível inserir o Grupo ao Chat!.');
+        this.notifyMessage.error('Não foi possível criar o Grupo!');
         console.log($event);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use CodeShopping\Models\ChatGroup;
+use CodeShopping\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Collection;
 
@@ -18,26 +19,37 @@ class ChatGroupsTableSeeder extends Seeder
     public function run()
     {
         $this->allFakerPhotos = $this->getFakerPhotos();
-        /** @var \Illuminate\Database\Eloquent\Collection $products */
         $this->deleteAllPhotosInChatGroupsPath();
         $self = $this;
+
+        $customerDefault = User::whereEmail('customer@user.com')->first();
+
+        /** @var \Illuminate\Database\Eloquent\Collection $otherCustomers */
+        $otherCustomers = User::whereRole(User::ROLE_CUSTOMER)
+            ->whereNotIn('id', [$customerDefault->id])->get();
+
         factory(ChatGroup::class, 10)
             ->make()
-            ->each(function ($group) use ($self) {
-                ChatGroup::createWithPhoto([
+            ->each(function ($group) use ($self, $otherCustomers) {
+                $group = ChatGroup::createWithPhoto([
                     'name' => $group->name,
-                    'photo' => $self->getUploadFile()
+                    'photo' => $self->getUploadedFile()
                 ]);
+                $customersId = $otherCustomers
+                    ->random(10)
+                    ->pluck('id')->toArray();
+                $group->users()->attach($customersId);
             });
     }
 
-    private function getUploadFile()
+    private function getUploadedFile()
     {
         /** @var SplFileInfo $photoFile */
         $photoFile = $this->allFakerPhotos->random();
         $uploadFile = new \Illuminate\Http\UploadedFile(
             $photoFile->getRealPath(),
-            str_random(16) . '.' . $photoFile->getExtension());
+            str_random(16) . '.' . $photoFile->getExtension()
+        );
         return $uploadFile;
     }
 

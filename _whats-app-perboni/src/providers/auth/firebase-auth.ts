@@ -19,7 +19,6 @@ export class FirebaseAuthProvider {
 
     constructor() {
         firebase.initializeApp(firebaseConfig);
-        console.log('Hello FirebaseAuthProvider Provider');
     }
 
     get firebase() {

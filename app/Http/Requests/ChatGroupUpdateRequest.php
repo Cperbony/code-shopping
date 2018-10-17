@@ -2,8 +2,6 @@
 
 namespace CodeShopping\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
 class ChatGroupUpdateRequest extends ChatGroupCreateRequest
 {
     /**

@@ -3,10 +3,7 @@
         <h5 modal-title>Novo Grupo</h5>
 
         <div modal-body>
-            <card-error *ngIf="showErrors()">
-                <list-error [errors]="errors"></list-error>
-            </card-error>
-
+            <list-error [errors]="errors"></list-error>
             <chat-group-form [form]="form"></chat-group-form>
         </div>
 

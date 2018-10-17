@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
-import fieldsOptions from "./chat-group-fields-options";
+import chatGroupFieldsOptions from "./chat-group-fields-options";
 import {FormGroup} from "@angular/forms";
 
 @Component({
@@ -23,7 +23,15 @@ export class ChatGroupFormComponent implements OnInit {
     }
 
     get fieldsOptions(): any {
-        return fieldsOptions;
+        return chatGroupFieldsOptions;
+    }
+
+    get name() {
+        return this.fieldsOptions.name;
+    }
+
+    get photo() {
+        return this.fieldsOptions.photo;
     }
 
     choosePhoto(files: FileList) {
@@ -31,6 +39,11 @@ export class ChatGroupFormComponent implements OnInit {
             return;
         }
         this.form.get('photo').setValue(files[0]);
+    }
+
+    removePhoto() {
+        this.form.get('remove_photo').setValue(1);
+        return false;
     }
 
 }

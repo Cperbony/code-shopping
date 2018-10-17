@@ -35,7 +35,7 @@ export class LoginPhoneNumberPage {
     //Se voltar, carregar novamente o firebaseui-form. Mas como ?????
 
     ionViewDidLoad() {
-        this.firebaseAuth.getToken().then(token => console.log(token));
+        // this.firebaseAuth.getToken().then(token => console.log(token));
         const currentUser = this.firebaseAuth.firebase.auth().currentUser;
         const unsubscribed = this.firebaseAuth.firebase.auth()
             .onAuthStateChanged((user) => {

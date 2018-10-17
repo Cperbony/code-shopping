@@ -17,8 +17,8 @@ export class ChatGroupDeleteService {
         this._chatGroupListComponent = value;
     }
 
-    showModalDelete(productId: number) {
-        this._chatGroupListComponent.chatGroupId = productId;
+    showModalDelete(chatGroupId: number) {
+        this._chatGroupListComponent.chatGroupId = chatGroupId;
         this._chatGroupListComponent.chatGroupDeleteModal.showModal();
     }
 

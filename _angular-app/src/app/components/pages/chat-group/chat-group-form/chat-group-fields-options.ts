@@ -1,6 +1,6 @@
 import {FieldsOptions} from "../../../../common/fields-options";
 
-const fieldsOptions: FieldsOptions = {
+const chatGroupFieldsOptions: FieldsOptions = {
     name: {
         id: 'name',
         label: 'Nome',
@@ -8,6 +8,10 @@ const fieldsOptions: FieldsOptions = {
             maxLength: 255
         }
     },
+    photo: {
+        id: 'photo',
+        label: 'Foto'
+    }
 };
 
-export default fieldsOptions;
+export default chatGroupFieldsOptions;

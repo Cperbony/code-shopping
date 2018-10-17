@@ -1,3 +1,13 @@
-<p>
-  chat-group-delete-modal works!
-</p>
+<modal (onHide)="hideModal($event)">
+    <h5 class="mt-5" modal-title>Exclusão do Grupo</h5>
+
+    <div modal-body>
+        <list-error [errors]="errors"></list-error>
+        <p>Deseja Excluir o grupo {{ chatGroup?.name }}</p>
+    </div>
+
+    <div modal-footer>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="submit" class="btn btn-danger" (click)="destroy()">Excluir</button>
+    </div>
+</modal>

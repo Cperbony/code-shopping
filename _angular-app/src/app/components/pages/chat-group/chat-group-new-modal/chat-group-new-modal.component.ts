@@ -3,7 +3,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {ModalComponent} from "../../../bootstrap/modal/modal.component";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ChatGroupHttpService} from "../../../../services/http/chat-group-http.service";
-import fieldsOptions from "../chat-group-form/chat-group-fields-options";
+import chatGroupFieldsOptions from "../chat-group-form/chat-group-fields-options";
 
 @Component({
     selector: 'chat-group-new-modal',
@@ -22,7 +22,7 @@ export class ChatGroupNewModalComponent implements OnInit {
 
     constructor(public chatGroupHttp: ChatGroupHttpService,
                 private formBuilder: FormBuilder) {
-        const maxLength = fieldsOptions.name.validationMessage.maxlength;
+        const maxLength = chatGroupFieldsOptions.name.validationMessage.maxlength;
         this.form = this.formBuilder.group({
             name: ['',
                 [Validators.required, Validators.maxLength(maxLength)]],

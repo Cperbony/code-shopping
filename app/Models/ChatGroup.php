@@ -30,6 +30,11 @@ class ChatGroup extends Model
         ];
     }
 
+    /**
+     * @param array $data
+     * @return ChatGroup
+     * @throws \Exception
+     */
     public static function createWithPhoto(array $data): ChatGroup
     {
         try {
@@ -39,7 +44,6 @@ class ChatGroup extends Model
             $chatGroup = self::create($data);
             \DB::commit();
         } catch (\Exception $e) {
-            //excluir a photo
             self::deleteFile($data['photo']);
             \DB::rollBack();
             throw $e;
@@ -50,16 +54,16 @@ class ChatGroup extends Model
     public function updateWithPhoto(array $data): ChatGroup
     {
         try {
-            if(isset($data['photo'])){
+            if (isset($data['photo'])) {
                 self::uploadPhoto($data['photo']);
                 $this->deletePhoto();
                 $data['photo'] = $data['photo']->hashName();
             }
             \DB::beginTransaction();
-            $this->fill($data)->save;
+            $this->fill($data)->save();
             \DB::commit();
         } catch (\Exception $e) {
-            if(isset($data['photo'])){
+            if (isset($data['photo'])) {
                 self::deleteFile($data['photo']);
             }
             \DB::rollBack();
@@ -76,7 +80,7 @@ class ChatGroup extends Model
 
     private static function deleteFile(UploadedFile $photo)
     {
-        $path = self::photosPath();
+        $path = self::photoPath();
         $photoPath = "{$path}/{$photo->hashName()}";
         if (file_exists($photoPath)) {
             \File::delete($photoPath);
@@ -86,10 +90,11 @@ class ChatGroup extends Model
     private function deletePhoto()
     {
         $dir = self::photoDir();
-        \Storage::disk('public')->delete("{$dir}/{$this->photo}");
+        \Storage::disk('public')
+            ->delete("{$dir}/{$this->photo}");
     }
 
-    private static function photosPath()
+    private static function photoPath()
     {
         $path = self::CHAT_GROUP_PHOTO_PATH;
         return storage_path($path);
@@ -105,6 +110,11 @@ class ChatGroup extends Model
     {
         $path = self::photoDir();
         return asset("storage/{$path}/{$this->photo}");
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
     }
 
 }

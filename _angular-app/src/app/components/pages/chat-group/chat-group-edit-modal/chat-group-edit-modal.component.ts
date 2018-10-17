@@ -4,7 +4,7 @@ import {ModalComponent} from "../../../bootstrap/modal/modal.component";
 import {ChatGroup} from "../../../../models";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ChatGroupHttpService} from "../../../../services/http/chat-group-http.service";
-import fieldsOptions from "../chat-group-form/chat-group-fields-options";
+import chatGroupFieldsOptions from "../chat-group-form/chat-group-fields-options";
 
 @Component({
     selector: 'chat-group-edit-modal',
@@ -16,6 +16,7 @@ export class ChatGroupEditModalComponent implements OnInit {
     _chatGroupId: number;
     chatGroup: ChatGroup;
     form: FormGroup;
+    errors = {};
 
     @ViewChild(ModalComponent) modal: ModalComponent;
     @Output() onSuccess: EventEmitter<any> = new EventEmitter<any>();
@@ -23,7 +24,7 @@ export class ChatGroupEditModalComponent implements OnInit {
 
     constructor(private chatGroupHttp: ChatGroupHttpService,
                 private formBuilder: FormBuilder) {
-        const maxLength = fieldsOptions.name.validationMessage.maxlength;
+        const maxLength = chatGroupFieldsOptions.name.validationMessage.maxlength;
         this.form = this.formBuilder.group({
             name: ['',
                 [Validators.required, Validators.maxLength(maxLength)]],
@@ -36,7 +37,10 @@ export class ChatGroupEditModalComponent implements OnInit {
 
     @Input()
     set chatGroupId(value) {
+        if (!value) return;
+
         this._chatGroupId = value;
+
         if (this._chatGroupId) {
             this.chatGroupHttp
                 .get(this._chatGroupId)
@@ -58,12 +62,20 @@ export class ChatGroupEditModalComponent implements OnInit {
         this.chatGroupHttp
             .update(this._chatGroupId, this.form.value)
             .subscribe((chatGroup) => {
-                this.onSuccess.emit(chatGroup);
                 this.modal.hide();
-            }, error => this.onError.emit(error));
+                this.onSuccess.emit(chatGroup);
+                this.form.reset();
+                this.errors = {};
+            }, responseError => {
+                if (responseError.status === 422) {
+                    this.errors = responseError.error.errors;
+                }
+                this.onError.emit(responseError)
+            });
     }
 
     showModal() {
+        this.form.get('photo').setValue(null);
         this.modal.show();
     }
 

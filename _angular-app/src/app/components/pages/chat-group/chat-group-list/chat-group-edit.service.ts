@@ -29,7 +29,7 @@ export class ChatGroupEditService{
     }
 
     onEditError($event: HttpErrorResponse) {
-        this.notifyMessage.error('Não foi possível efetuar a edição do grupo de chat');
+        this.notifyMessage.error('Não foi possível atualizar os dados do grupo!');
         console.log($event);
     }
 

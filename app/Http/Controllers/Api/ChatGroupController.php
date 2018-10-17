@@ -17,7 +17,7 @@ class ChatGroupController extends Controller
 
     public function index(Request $request)
     {
-//        $chat_groups = (new ChatGroup)->paginate();
+//        $chat_groups = ChatGroup::withCount('users')->paginate();
 //        return ChatGroupResource::collection($chat_groups);
 
         $filter = app(ChatGroupFilter::class);
@@ -26,10 +26,15 @@ class ChatGroupController extends Controller
         $filterQuery = $query->filtered($filter);
         $chat_groups = $filter->hasFilterParameter() ?
             $filterQuery->get() :
-            $filterQuery->paginate(10);
+//            $filterQuery->paginate(10);
+            $chat_groups = ChatGroup::withCount('users')->paginate(10);
         return ChatGroupResource::collection($chat_groups);
     }
 
+    /**
+     * @param ChatGroupCreateRequest $request
+     * @return ChatGroupResource
+     */
     public function store(ChatGroupCreateRequest $request)
     {
         try {

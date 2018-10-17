@@ -1,3 +1,20 @@
-<p>
-  chat-group-edit-modal works!
-</p>
+<form (submit)="submit()">
+    <modal (onHide)="hideModal($event)">
+        <h5 class="mt-5" modal-title>Editar Grupo {{ form.get('name').value }}</h5>
+
+        <div modal-body>
+            <list-error [errors]="errors"></list-error>
+            <chat-group-form [form]="form"></chat-group-form>
+
+            <div *ngIf="chatGroup?.photo_url">
+                <img [src]="chatGroup?.photo_url" alt="chatGroup?.name" class="img-thumbnail">
+            </div>
+
+        </div>
+
+        <div modal-footer>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+    </modal>
+</form>

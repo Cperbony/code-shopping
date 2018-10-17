@@ -14,6 +14,7 @@ export class ChatGroupDeleteModalComponent implements OnInit {
 
     _chatGroupId: number;
     chatGroup: ChatGroup = null;
+    errors = {};
 
     @ViewChild(ModalComponent) modal: ModalComponent;
     @Output() onSuccess: EventEmitter<any> = new EventEmitter<any>();
@@ -27,6 +28,8 @@ export class ChatGroupDeleteModalComponent implements OnInit {
 
     @Input()
     set chatGroupId(value) {
+        if (!value) return;
+
         this._chatGroupId = value;
         if (this._chatGroupId) {
             this.chatGroupHttp
@@ -41,7 +44,13 @@ export class ChatGroupDeleteModalComponent implements OnInit {
             .subscribe((chatGroup) => {
                 this.onSuccess.emit(chatGroup);
                 this.modal.hide();
-            }, error => this.onError.emit(error));
+                this.errors = {};
+            }, responseError => {
+                if (responseError.status === 422) {
+                    this.errors = responseError.error.errors;
+                }
+                this.onError.emit(responseError);
+            });
     }
 
     showModal() {
