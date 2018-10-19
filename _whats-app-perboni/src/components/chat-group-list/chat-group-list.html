@@ -1,10 +1,10 @@
 <ion-content>
     <ion-list>
-        <ion-item>
+        <ion-item *ngFor="let group of groups">
             <ion-avatar item-start>
                 <img src="http://www.gravatar.com/avatar/?d=identicon" alt="">
             </ion-avatar>
-            <h2>Nome do Grupo</h2>
+            <h2>{{group.name}}</h2>
             <h3>
                 Quais são as características do produto X?
             </h3>

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CodeShopping\Models;
 
-use Cviebrock\EloquentSluggable\Sluggable;
+use CodeShopping\Firebase\FirebaseSync;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\UploadedFile;
@@ -12,7 +12,7 @@ use Mnabialek\LaravelEloquentFilter\Traits\Filterable;
 
 class ChatGroup extends Model
 {
-    use Sluggable, softDeletes, Filterable;
+    use softDeletes, Filterable, FirebaseSync;
 
     const BASE_PATH = 'app/public';
     const DIR_CHAT_GROUPS = 'chat_groups';
@@ -20,15 +20,6 @@ class ChatGroup extends Model
 
     protected $fillable = ['name', 'photo'];
     protected $dates = ['deleted_at'];
-
-    public function sluggable(): array
-    {
-        return [
-            'slug' => [
-                'source' => 'name'
-            ]
-        ];
-    }
 
     /**
      * @param array $data
@@ -39,9 +30,9 @@ class ChatGroup extends Model
     {
         try {
             self::uploadPhoto($data['photo']);
-            $data['photo'] = $data['photo']->hashName();
+            //$data['photo'] = $data['photo']->hashName();
             \DB::beginTransaction();
-            $chatGroup = self::create($data);
+            $chatGroup = self::create($data + ['photo' => $data['photo']->hashName()]);
             \DB::commit();
         } catch (\Exception $e) {
             self::deleteFile($data['photo']);
@@ -106,15 +97,33 @@ class ChatGroup extends Model
         return $dir;
     }
 
-    public function getPhotoUrlAttribute()
-    {
-        $path = self::photoDir();
-        return asset("storage/{$path}/{$this->photo}");
-    }
-
     public function users()
     {
         return $this->belongsToMany(User::class);
+    }
+
+    protected function syncFbRemove()
+    {
+        $this->syncFbSet();
+    }
+
+    protected function syncFbSet()
+    {
+        $data = $this->toArray();
+        $data['photo_url'] = $this->photo_url_base;
+        unset($data['photo']);
+        $this->getModelReference()->set($data);
+    }
+
+    public function getPhotoUrlAttribute()
+    {
+        return asset("storage/{$this->photo_url_base}");
+    }
+
+    public function getPhotoUrlBaseAttribute()
+    {
+        $path = self::photoDir();
+        return "{$path}/{$this->photo}";
     }
 
 }
