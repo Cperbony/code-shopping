@@ -22,7 +22,7 @@ export class CategoryListComponent implements OnInit {
     pagination: FieldsPagination = {
         page: 1,
         totalItems: 0,
-        ItemsPerPage: 15
+        itemsPerPage: 15
     };
 
     sortColumn: FieldsSortColumn = {
@@ -65,7 +65,7 @@ export class CategoryListComponent implements OnInit {
             .subscribe(response => {
                 this.categories = response.data;
                 this.pagination.totalItems = response.meta.total;
-                this.pagination.ItemsPerPage = response.meta.per_page;
+                this.pagination.itemsPerPage = response.meta.per_page;
             })
     }
 

@@ -9,6 +9,7 @@ import {ChatGroupEditService} from "./chat-group-edit.service";
 import {ChatGroupDeleteService} from "./chat-group-delete.service";
 import {FieldsSortColumn} from "../../../../common/fields-sort-column";
 import {NotifyMessageService} from "../../../../services/notify-message.service";
+import {FieldsPagination} from "../../../../common/fields-pagination";
 
 @Component({
     selector: 'chat-group-list',
@@ -18,20 +19,19 @@ import {NotifyMessageService} from "../../../../services/notify-message.service"
 export class ChatGroupListComponent implements OnInit {
 
     chatGroups: Array<ChatGroup> = [];
+    chatGroupId: number;
+    searchText: string;
 
-    pagination = {
+    pagination: FieldsPagination = {
         page: 1,
         totalItems: 0,
-        ItemsPerPage: 10
+        itemsPerPage: 10
     };
 
     sortColumn: FieldsSortColumn = {
         column: 'created_at',
         sort: 'desc'
     };
-
-    chatGroupId: number;
-    searchText: string;
 
     @ViewChild(ChatGroupNewModalComponent)
     chatGroupNewModal: ChatGroupNewModalComponent;
@@ -53,20 +53,20 @@ export class ChatGroupListComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log('ngOnInit');
         this.getChatGroups();
     }
 
     getChatGroups() {
-        this.chatGroupHttp.list({
+        const searchParams = {
             page: this.pagination.page,
             sort: this.sortColumn.column === '' ? null : this.sortColumn,
             search: this.searchText
-        })
+        };
+        this.chatGroupHttp.list(searchParams)
             .subscribe(response => {
                 this.chatGroups = response.data;
                 this.pagination.totalItems = response.meta.total;
-                this.pagination.ItemsPerPage = response.meta.per_page;
+                this.pagination.itemsPerPage = response.meta.per_page;
             });
         this.chatGroupId = 0;
     }
@@ -76,7 +76,7 @@ export class ChatGroupListComponent implements OnInit {
         this.getChatGroups();
     }
 
-    sort(sortColumn) {
+    onSort($event) {
         this.getChatGroups();
     }
 

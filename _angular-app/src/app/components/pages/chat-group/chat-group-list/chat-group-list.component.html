@@ -11,42 +11,42 @@
         </tr>
         <tr>
             <th style="width: 5%"
+                [sortColumn]="sortColumn"
                 columnName="id"
-                [sortColumn]="sortColumn"
-                (onSort)="sort($event)">ID
-            </th>
+                (onSort)="onSort($event)">ID</th>
 
-            <th style="width: 65%"
-                columnName="name"
+            <th style="width: 42%"
                 [sortColumn]="sortColumn"
-                (onSort)="sort($event)">Nome
-            </th>
+                columnName="name"
+                (onSort)="onSort($event)">Nome</th>
 
             <th style="width: 8%">Usuários</th>
 
-            <th style="width: 12%"
-                columnName="created_at"
+            <th style="width: 15%"
                 [sortColumn]="sortColumn"
-                (onSort)="sort($event)">Criado em
-            </th>
+                columnName="created_at"
+                (onSort)="onSort($event)">Criado em</th>
 
-            <th style="width: 10%">Ações</th>
+            <th style="width: 20%">Ações</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let chatGroup of chatGroups | paginate: {itemsPerPage: 5, currentPage: pagination.page, totalItems: pagination.totalItems }">
+        <tr *ngFor="let chatGroup of chatGroups | paginate: {itemsPerPage: pagination.itemsPerPage, currentPage: pagination.page, totalItems: pagination.totalItems }">
             <td>{{ chatGroup.id }}</td>
             <td>{{ chatGroup.name }}</td>
             <td class="text-center">{{ chatGroup.count_users }}</td>
             <td>{{ chatGroup.created_at.date | date: 'dd/MM/yyyy' }}</td>
             <td>
-                <a [routerLink]="['/chat-groups', chatGroup.id, 'users', 'list']">
+                <a href="javascript:void(0)"
+                   [routerLink]="['/chat-groups', chatGroup.id, 'users', 'list']">
                     <i class="fas fa-user"></i>
                 </a> |
-                <a href="javascript:void(0)" (click)="chatGroupEditService.showModalEdit(chatGroup.id)">
+                <a href="javascript:void(0)"
+                   (click)="chatGroupEditService.showModalEdit(chatGroup.id)">
                     <i class="fas fa-edit">&nbsp;|&nbsp;</i>
                 </a> |
-                <a href="javascript:void(0)" (click)="chatGroupDeleteService.showModalDelete(chatGroup.id)">
+                <a href="javascript:void(0)"
+                   (click)="chatGroupDeleteService.showModalDelete(chatGroup.id)">
                     <i class="fas fa-trash-alt">&nbsp;</i>
                 </a>
                 <!--<a [routerLink]="['/chatGroups', chatGroup.id, 'categories', 'list']"> Categorias</a> |-->

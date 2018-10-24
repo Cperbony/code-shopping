@@ -1,0 +1,49 @@
+<div class="row">
+    <h1>Membros do Grupo - {{chatGroup?.name}} |
+        Total - {{chatGroup?.count_users}}</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <td colspan="5">
+                <chat-group-user-new
+                        [chatGroupId]="chatGroupId"
+                        (onSuccess)="onInsertSuccess($event)"
+                        (onError)="onInsertError($event)">
+                </chat-group-user-new>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 5%">ID</th>
+            <th style="width: 45%">Nome</th>
+            <th style="width: 25%">Email</th>
+            <th style="width: 25%">Telefone</th>
+            <th style="width: 10%">Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let user of users | paginate: {itemsPerPage: pagination.itemsPerPage, currentPage: pagination.page, totalItems: pagination.totalItems}">
+            <td>{{user.id}}</td>
+            <td>{{user.name}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.profile.phone_number}}</td>
+            <td>
+                <a href="javascript:void(0)" (click)="openModalDelete(user.id)">
+                    <i class="fas fa-thrash-alt"></i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <pagination-controls (pageChange)="pageChanged($event)"
+                         previousLabel="Anterior"
+                         nextLabel="Próxima">
+    </pagination-controls>
+
+    <chat-group-user-delete
+            [chatGroupId]="chatGroupId"
+            [userId]="userIdToDelete"
+            (onSuccess)="getUsers()">
+    </chat-group-user-delete>
+
+</div>

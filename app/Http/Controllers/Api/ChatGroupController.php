@@ -9,12 +9,18 @@ use CodeShopping\Http\Requests\ChatGroupCreateRequest;
 use CodeShopping\Http\Requests\ChatGroupUpdateRequest;
 use CodeShopping\Http\Resources\ChatGroupResource;
 use CodeShopping\Models\ChatGroup;
+use CodeShopping\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class ChatGroupController extends Controller
 {
     use OnlyTrashed;
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
     public function index(Request $request)
     {
 //        $chat_groups = ChatGroup::withCount('users')->paginate();
@@ -26,7 +32,6 @@ class ChatGroupController extends Controller
         $filterQuery = $query->filtered($filter);
         $chat_groups = $filter->hasFilterParameter() ?
             $filterQuery->get() :
-//            $filterQuery->paginate(10);
             $chat_groups = ChatGroup::withCount('users')->paginate(10);
         return ChatGroupResource::collection($chat_groups);
     }
