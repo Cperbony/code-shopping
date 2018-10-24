@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
-import { ChatGroupListComponent } from './chat-group-list/chat-group-list';
 @NgModule({
-	declarations: [ChatGroupListComponent],
+	declarations: [],
 	imports: [],
-	exports: [ChatGroupListComponent]
+	exports: []
 })
 export class ComponentsModule {}

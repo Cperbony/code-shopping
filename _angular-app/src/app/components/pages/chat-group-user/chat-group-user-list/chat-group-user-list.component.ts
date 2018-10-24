@@ -17,6 +17,7 @@ export class ChatGroupUserListComponent implements OnInit {
     users: Array<User> = [];
     userId: number;
     userIdToDelete;
+
     pagination = {
         page: 1,
         totalItems: 0,
