@@ -6,13 +6,22 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>chat-messages</ion-title>
-  </ion-navbar>
+    <ion-navbar color="green-dark">
+        <ion-item color="green-dark" no-lines>
+            <ion-avatar item-start>
+                <img src="https://www.gravatar.com/avatar/nouser.jpg" alt="">
+            </ion-avatar>
+            <ion-title>Nome do Grupo</ion-title>
+        </ion-item>
+    </ion-navbar>
 
 </ion-header>
 
-
-<ion-content padding>
-
+<ion-content padding class="chat-bg">
+    <chat-content-left></chat-content-left>
+    <chat-content-right></chat-content-right>
 </ion-content>
+
+<ion-footer no-border>
+    <chat-footer></chat-footer>
+</ion-footer>

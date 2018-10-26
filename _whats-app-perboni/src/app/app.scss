@@ -16,3 +16,7 @@
 // automatically applied to the <body> element in the app.
 
 @import "node_modules/firebaseui/dist/firebaseui";
+
+.chat-bg{
+  background-color: map_get($colors, beige-light);
+}
