@@ -1,5 +1,5 @@
 <ion-item no-lines text-wrap class="chat-content-right">
-  <strong>Nome do Usuário</strong><br>
+  <strong>{{message.user?.name}}</strong><br>
   <span>{{message.content}}</span>
-  <p class="chat-content-datetime" text-right>12/12/1212</p>
+  <p class="chat-content-datetime" text-right>{{message.created_at | amDateFormat: 'DD/MM/YYYY HH:mm'}}</p>
 </ion-item>
