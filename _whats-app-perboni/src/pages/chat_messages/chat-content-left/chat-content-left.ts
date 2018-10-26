@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 /**
  * Generated class for the ChatContentLeftComponent component.
@@ -7,16 +7,17 @@ import { Component } from '@angular/core';
  * Components.
  */
 @Component({
-  selector: 'chat-content-left',
-  templateUrl: 'chat-content-left.html'
+    selector: 'chat-content-left',
+    templateUrl: 'chat-content-left.html'
 })
 export class ChatContentLeftComponent {
 
-  text: string;
+    @Input()
+    message;
 
-  constructor() {
-    console.log('Hello ChatContentLeftComponent Component');
-    this.text = 'Hello World';
-  }
+    text: string;
+
+    constructor() {
+    }
 
 }
