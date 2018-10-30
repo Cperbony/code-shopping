@@ -2,8 +2,8 @@ export interface ChatGroup {
     readonly id: number;
     readonly name: string;
     readonly photo_url: string;
-    readonly created_at?: { date: string }
-    readonly updated_at?: { date: string }
+    readonly created_at?: { date: string };
+    readonly updated_at?: { date: string };
 }
 
 export interface ChatMessage {
@@ -20,8 +20,8 @@ export interface User {
     email: string;
     password?: string;
     profile?: UserProfile;
-    readonly created_at?: { date: string }
-    readonly updated_at?: { date: string }
+    readonly created_at?: { date: string };
+    readonly updated_at?: { date: string };
 }
 
 export interface UserProfile {

@@ -49,6 +49,7 @@ export class AuthProvider {
             email: decodedPayloadToken.email,
             profile: decodedPayloadToken.profile
         } : null;
+        return;
     }
 
     getToken(): string | null {

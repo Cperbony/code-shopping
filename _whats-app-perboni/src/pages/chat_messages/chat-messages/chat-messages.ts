@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
-import {ChatGroup, ChatMessage} from "../../../app/model";
+import {ChatMessage} from "../../../app/model";
 import {FirebaseAuthProvider} from "../../../providers/auth/firebase-auth";
+import {Observable} from "rxjs/Observable";
 
 /**
  * Generated class for the ChatMessagesPage page.
@@ -29,14 +30,15 @@ export class ChatMessagesPage {
 
         database.ref('chat_groups/1/messages').on('child_added', (data) => {
             const message = data.val();
-            message.user = new Promise((resolve) => {
+            message.user = Observable.create((observer) => {
                 database.ref(`users/${message.user_id}`)
                     .on('value', (data) => {
                         const user = data.val();
-                        resolve(user);
+                        observer.next(user);
                     });
-                this.messages.push(message);
             });
+            // message.user.then((user) => console.log(user));
+            this.messages.push(message);
         });
     }
 

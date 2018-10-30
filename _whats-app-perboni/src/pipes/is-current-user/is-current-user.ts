@@ -15,10 +15,11 @@ export class IsCurrentUserPipe implements PipeTransform {
 
     }
 
-    /**
-     * Takes a value and makes it lowercase.
-     */
     transform(value: string, ...args) {
-        return this.auth.me.profile.firebase_uid === value;
+        let isCurrentUser = false;
+        if (this.auth.me) {
+            isCurrentUser = (this.auth.me.profile.firebase_uid == value);
+        }
+        return isCurrentUser;
     }
 }

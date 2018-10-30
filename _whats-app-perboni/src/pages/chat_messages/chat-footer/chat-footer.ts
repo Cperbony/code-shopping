@@ -12,11 +12,7 @@ import { Component } from '@angular/core';
 })
 export class ChatFooterComponent {
 
-  text: string;
-
   constructor() {
-    console.log('Hello ChatFooterComponent Component');
-    this.text = 'Hello World';
   }
 
 }
