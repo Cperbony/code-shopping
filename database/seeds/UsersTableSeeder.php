@@ -59,7 +59,7 @@ class UsersTableSeeder extends Seeder
             ->each(function (User $user, $key) {
                 $user->profile->phone_number = "+165055510{$key}";
                 $user->profile->firebase_uid = "user-{$key}";
-                $user->profile->photo = $this->getSomeCustomersPhoto();
+                $user->profile->photo = $this->getCustomerPhoto();
                 $user->profile->save();
             });
     }
@@ -84,11 +84,10 @@ class UsersTableSeeder extends Seeder
     {
         /** @var SplFileInfo $photoFile */
         $photoFile = $this->allFakerPhotos->random();
-        $uploadFile = new \Illuminate\Http\UploadedFile(
-            $photoFile->getRealPath(),
+        return new \Illuminate\Http\UploadedFile(
+           storage_path($this->$photoFile),
             str_random(16) . '.' . $photoFile->getExtension()
         );
-        return $uploadFile;
     }
 
     private function getFakerPhotos(): Collection

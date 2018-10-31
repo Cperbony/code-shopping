@@ -31,7 +31,7 @@ class ChatGroup extends Model
     {
         try {
             self::uploadPhoto($data['photo']);
-            //$data['photo'] = $data['photo']->hashName();
+            $data['photo'] = $data['photo']->hashName();
             \DB::beginTransaction();
             $chatGroup = self::create($data);
 //          $chatGroup = self::create($data + ['photo' => $data['photo']->hashName()]);
