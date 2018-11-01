@@ -18,21 +18,35 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
+
     Route::post('login', 'AuthController@login')->name('login');
+
     Route::post('login_vendor', 'AuthController@loginFirebase')->name('login_vendor');
+
     Route::post('refresh', 'AuthController@refresh')->name('refresh');
 
     Route::post('customers/phone_numbers', 'CustomerController@requestPhoneNumberUpdate');
+
     Route::patch('customers/phone_numbers/{token}', 'CustomerController@updatePhoneNumber');
+
     Route::resource('customers', 'CustomerController', ['only' => ['store']]);
 
-    Route::group(['middleware' => ['auth:api', 'jwt.refresh']], function () {
+    //'jwt.refresh'
+    Route::group(['middleware' => ['auth:api']], function () {
+
+        Route::post('logout', 'AuthController@logout')->name('logout');
 
         Route::patch('profile', 'UserProfileController@update');
-        Route::resource('chat_groups.messages', 'ChatMessageFbController', ['only' => ['store']]);
 
+        Route::name('chat_groups.messages')->post('chat_groups/{chat_group}/messages', 'ChatMessageFbController@store');
+
+        Route::resource('chat_groups.messages', 'ChatMessageFbController',
+            ['only' => ['store']]);
+
+
+        //IS SELLER
         Route::group(['middleware' => ['can:is_seller']], function () {
-            Route::post('logout', 'AuthController@logout')->name('logout');
+
             Route::get('me', 'AuthController@me')->name('me');
 
             Route::patch('products/{product}/restore', 'ProductController@restore');
@@ -66,7 +80,6 @@ Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
                 'only' => ['index', 'store', 'destroy']
             ]);
         });
-
 
     });
 });

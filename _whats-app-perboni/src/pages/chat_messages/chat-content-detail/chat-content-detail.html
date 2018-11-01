@@ -1,8 +1,14 @@
 <ion-item no-lines text-wrap
           [ngClass]="{'chat-content-left': !(message.user_id | isCurrentUser), 'chat-content-right': message.user_id | isCurrentUser}">
-  <strong [style.color]="(message.user|async)?.name | colorFirstLetter">
-    {{(message.user|async)?.name}}
-  </strong><br>
-  <span>{{message.content}}</span>
-  <p class="chat-content-datetime" text-right>{{message.created_at | amDateFormat: 'DD/MM/YYYY HH:mm'}}</p>
+    <strong [style.color]="(message.user|async)?.name | colorFirstLetter">
+        {{(message.user|async)?.name}}
+    </strong><br>
+
+    <span *ngIf="message.type === 'text'">{{message.content}}</span>
+
+    <ion-card *ngIf="message.type ===  'image'">
+        <img [src]="message.content | buildUrl" alt="">
+    </ion-card>
+
+    <p class="chat-content-datetime" text-right>{{message.created_at | amDateFormat: 'DD/MM/YYYY HH:mm'}}</p>
 </ion-item>
