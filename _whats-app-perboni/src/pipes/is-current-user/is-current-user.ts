@@ -18,7 +18,7 @@ export class IsCurrentUserPipe implements PipeTransform {
     transform(value: string, ...args) {
         let isCurrentUser = false;
         if (this.auth.me) {
-            isCurrentUser = (this.auth.me.profile.firebase_uid == value);
+            isCurrentUser = (this.auth.me.profile.firebase_uid === value);
         }
         return isCurrentUser;
     }

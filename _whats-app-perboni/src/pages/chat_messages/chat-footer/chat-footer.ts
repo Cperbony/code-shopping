@@ -1,6 +1,8 @@
 import {Component, ViewChild} from '@angular/core';
 import {ChatMessageHttpProvider} from "../../../providers/http/chat-message-http";
 import {TextInput} from "ionic-angular";
+import Timer from 'easytimer.js/dist/easytimer.min';
+import {Media} from "@ionic-native/media";
 
 /**
  * Generated class for the ChatFooterComponent component.
@@ -16,14 +18,39 @@ export class ChatFooterComponent {
 
     text: string = '';
     messageType = 'text';
+    timer = new Timer();
 
     @ViewChild('inputFileImage')
     inputFileImage: TextInput;
 
-    constructor(private chatMessageHttp: ChatMessageHttpProvider) {
+    constructor(private chatMessageHttp: ChatMessageHttpProvider,
+                private media: Media) {
     }
 
-    sendMessageText(){
+    holdAudioButton() {
+        const record = this.media.create('recording.aac');
+        record.startRecord();
+        setTimeout(() => {
+            record.stopRecord();
+            record.play();
+        }, 5000);
+        this.timer.start({precision: 'seconds'});
+        this.timer.addEventListener('secondsUpdated', (e) => {
+            const time = this.getMinuteSeconds();
+            this.text = `${time} Gravando ...`;
+        });
+    }
+
+    private getMinuteSeconds() {
+        return this.timer.getTimeValues().toString().substring(3);
+    }
+
+    releaseAudioButton() {
+        this.timer.stop();
+        this.text = '';
+    }
+
+    sendMessageText() {
         this.sendMessage({content: this.text, type: 'text'});
     }
 
@@ -34,7 +61,7 @@ export class ChatFooterComponent {
         this.sendMessage({content: files[0], type: 'image'});
     }
 
-    sendMessage(data: {content, type}) {
+    sendMessage(data: { content, type }) {
         this.chatMessageHttp
             .create(1, {type: this.messageType, content: this.text})
             .subscribe(() => console.log('enviou'));
@@ -44,5 +71,12 @@ export class ChatFooterComponent {
         const nativeElement: HTMLElement = this.inputFileImage.getElementRef().nativeElement;
         const inputFile = nativeElement.querySelector('input');
         inputFile.click();
+    }
+
+    getIconSendMessage() {
+        if (this.messageType === 'text') {
+            return this.text === '' ? 'mic' : 'send';
+        }
+        return 'mic';
     }
 }

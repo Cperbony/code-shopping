@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import {FirebaseAuthProvider} from "./firebase-auth";
 import {fromPromise} from 'rxjs/observable/fromPromise';
-import {flatMap} from "rxjs/operators";
+import {flatMap, tap} from "rxjs/operators";
 import {User} from "../../app/model";
 import {JwtHelperService} from '@auth0/angular-jwt';
 
@@ -32,6 +32,11 @@ export class AuthProvider {
             .pipe(
                 flatMap(token => {
                     return this.http.post<{ token: string }>('http://localhost:8000/api/login_vendor', {token})
+                        .pipe(
+                            tap(response => {
+                                this.setToken(response.token);
+                            })
+                        );
                 })
             );
     }

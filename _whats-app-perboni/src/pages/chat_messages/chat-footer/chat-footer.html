@@ -14,8 +14,12 @@
                     <ion-col col-2 col-sm-2 col-md-1 col-xl-1 class="no-padding-no-margin">
                         <button ion-button class="btn-send-message"
                                 color="green-dark"
-                                (click)="sendMessage()">
-                            <ion-icon name="send"></ion-icon>
+                                ion-long-press
+                                [interval]="300000"
+                                (onPressStart)="holdAudioButton()"
+                                (onPressEnd)="releaseAudioButton"
+                                (click)="sendMessageText()">
+                            <ion-icon [name]="getIconSendMessage()"></ion-icon>
                         </button>
                     </ion-col>
                 </ion-row>

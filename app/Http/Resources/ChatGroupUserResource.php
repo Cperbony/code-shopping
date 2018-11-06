@@ -33,9 +33,9 @@ class ChatGroupUserResource extends JsonResource
 
     protected function getChatGroup()
     {
-        $chat_group = $this->resource;
-        $chat_group->users_count = $this->resource->users()->count();
-        return $chat_group;
+        $chatGroup = $this->resource;
+        $chatGroup->users_count = $this->resource->users()->count();
+        return $chatGroup;
     }
 
     protected function makeArray($request)

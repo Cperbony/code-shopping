@@ -133,7 +133,8 @@ class ChatGroup extends Model
         $users = User::whereIn('id', $pivotIds)->get();
         $data = [];
         foreach ($users as $user) {
-            $data["chat_groups/{$model->id}/users/{$user->profile->firebase_uid}"] = true;
+            $key = $this->chatGroupUsersKey($model, $user);
+            $data[$key] = true;
         }
         $this->getFirebaseDatabase()->getReference()->update($data);
     }
@@ -143,9 +144,20 @@ class ChatGroup extends Model
         $users = User::whereIn('id', $pivotIds)->get();
         $data = [];
         foreach ($users as $user) {
-            $data["chat_groups/{$model->id}/users/{$user->profile->firebase_uid}"] = null;
+            $key = $this->chatGroupUsersKey($model, $user);
+            $data[$key] = null;
         }
         $this->getFirebaseDatabase()->getReference()->update($data);
+    }
+
+    /**
+     * @param $model
+     * @param $user
+     * @return string
+     */
+    protected function chatGroupUsersKey($model, $user): string
+    {
+        return "chat_groups_users/{$model->id}/{$user->profile->firebase_uid}";
     }
 
 }

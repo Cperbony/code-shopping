@@ -21,8 +21,9 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {SuperTabsModule} from "ionic2-super-tabs";
 import {ChatGroupListComponent} from "../components/chat-group-list/chat-group-list";
 import {ChatMessagesPageModule} from "../pages/chat_messages/chat-messages/chat-messages.module";
-import {JWT_OPTIONS, JwtModule} from '@auth0/angular-jwt';
+import {JwtModule, JWT_OPTIONS} from '@auth0/angular-jwt';
 import { ChatMessageHttpProvider } from '../providers/http/chat-message-http';
+import {Media} from "@ionic-native/media";
 
 function jwtFactory(authService: AuthProvider) {
     return {
@@ -60,7 +61,7 @@ function jwtFactory(authService: AuthProvider) {
                 useFactory: jwtFactory,
                 deps: [AuthProvider]
             }
-        })
+        }),
     ],
     bootstrap: [IonicApp],
     entryComponents: [
@@ -81,7 +82,8 @@ function jwtFactory(authService: AuthProvider) {
         FirebaseAuthProvider,
         AuthProvider,
     CustomerHttpProvider,
-    ChatMessageHttpProvider
+    ChatMessageHttpProvider,
+        Media
     ]
 })
 export class AppModule {
