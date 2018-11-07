@@ -2,7 +2,7 @@ import {Component, ViewChild} from '@angular/core';
 import {ChatMessageHttpProvider} from "../../../providers/http/chat-message-http";
 import {TextInput} from "ionic-angular";
 import Timer from 'easytimer.js/dist/easytimer.min';
-import {Media} from "@ionic-native/media";
+import {AudioRecorderProvider} from "../../../providers/audio-recorder/audio-recorder";
 
 /**
  * Generated class for the ChatFooterComponent component.
@@ -24,18 +24,21 @@ export class ChatFooterComponent {
     inputFileImage: TextInput;
 
     constructor(private chatMessageHttp: ChatMessageHttpProvider,
-                private media: Media) {
+                private audioRecorder: AudioRecorderProvider) {
     }
 
     holdAudioButton() {
-        const record = this.media.create('recording.aac');
-        record.startRecord();
-        setTimeout(() => {
-            record.stopRecord();
-            record.play();
-        }, 5000);
+        // const record = this.media.create('recording.aac');
+        // record.startRecord();
+        // setTimeout(() => {
+        //     record.stopRecord();
+        //     record.play();
+        // }, 5000);
+
+        this.audioRecorder.startRecord();
         this.timer.start({precision: 'seconds'});
         this.timer.addEventListener('secondsUpdated', (e) => {
+            // console.log(e);
             const time = this.getMinuteSeconds();
             this.text = `${time} Gravando ...`;
         });
@@ -48,6 +51,8 @@ export class ChatFooterComponent {
     releaseAudioButton() {
         this.timer.stop();
         this.text = '';
+        this.audioRecorder.stopRecord()
+            .then((blob) => console.log(blob));
     }
 
     sendMessageText() {
