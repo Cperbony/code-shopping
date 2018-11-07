@@ -10,5 +10,10 @@
         <img [src]="message.content | buildUrl" alt="">
     </ion-card>
 
+    <audio controls style="width: 100%"
+           *ngIf="message.type === 'audio'">
+        <source [src]="message.content | buildUrl">
+    </audio>
+
     <p class="chat-content-datetime" text-right>{{message.created_at | amDateFormat: 'DD/MM/YYYY HH:mm'}}</p>
 </ion-item>
