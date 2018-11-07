@@ -1,6 +1,6 @@
 <ion-input type="file" [hidden]="true" #inputFileImage (change)="sendMessageImage($event.target.files)"></ion-input>
 <ion-list>
-    <ion-item-sliding>
+    <ion-item-sliding #itemSliding (ion-Drag)="onDrag()">
         <ion-item class="no-padding-no-margin" color="beige-light">
             <ion-grid>
                 <ion-row>
@@ -17,7 +17,7 @@
                                 ion-long-press
                                 [interval]="300000"
                                 (onPressStart)="holdAudioButton()"
-                                (onPressEnd)="releaseAudioButton"
+                                (onPressEnd)="releaseAudioButton($event)"
                                 (click)="sendMessageText()">
                             <ion-icon [name]="getIconSendMessage()"></ion-icon>
                         </button>

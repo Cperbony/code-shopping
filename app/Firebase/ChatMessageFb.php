@@ -8,7 +8,6 @@
 
 namespace CodeShopping\Firebase;
 
-
 use CodeShopping\Models\ChatGroup;
 use Illuminate\Http\UploadedFile;
 
@@ -37,7 +36,7 @@ class ChatMessageFb
                 $this->upload($data['content']);
                 /** @var UploadedFile $uploadedFile */
                 $uploadedFile = $data['content'];
-                $fileUrl = $this->groupFilesDir() . '/' . $uploadedFile->hashName();
+                $fileUrl = $this->groupFilesDir() . '/' .$this->buildFileName( $uploadedFile);
                 $data['content'] = $fileUrl;
         }
         $reference = $this->getMessagesReference();
@@ -51,7 +50,17 @@ class ChatMessageFb
 
     private function upload(UploadedFile $file)
     {
-        $file->store($this->groupFilesDir(), ['disk' => 'public']);
+        $file->storeAs($this->groupFilesDir(), $this->buildFileName($file), ['disk' => 'public']);
+    }
+
+    private function buildFileName(UploadedFile $file)
+    {
+        switch ($file->getMimeType()) {
+            case 'audio/x-hx-aac-adts';
+                return "{$file->hashName()}aac";
+            default:
+                return $file->hashName();
+        }
     }
 
     private function groupFilesDir()
