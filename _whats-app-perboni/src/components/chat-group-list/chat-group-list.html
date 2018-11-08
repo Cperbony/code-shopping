@@ -1,6 +1,7 @@
 <ion-content>
     <ion-list>
-        <ion-item *ngFor="let group of groups">
+        <ion-item *ngFor="let group of groups"
+                  [hidden]="!(group.is_member|async)">
             <ion-avatar item-start>
                 <img src="http://www.gravatar.com/avatar/?d=identicon" alt="">
             </ion-avatar>

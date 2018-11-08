@@ -25,6 +25,7 @@ import {JWT_OPTIONS, JwtModule} from '@auth0/angular-jwt';
 import {ChatMessageHttpProvider} from '../providers/http/chat-message-http';
 import {Media} from "@ionic-native/media";
 import {File} from "@ionic-native/file";
+import {ChatGroupFbProvider} from '../providers/firebase/chat-group-fb';
 
 function jwtFactory(authService: AuthProvider) {
     return {
@@ -84,10 +85,11 @@ function jwtFactory(authService: AuthProvider) {
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         FirebaseAuthProvider,
         AuthProvider,
-    CustomerHttpProvider,
-    ChatMessageHttpProvider,
+        CustomerHttpProvider,
+        ChatMessageHttpProvider,
         Media,
         File,
+        ChatGroupFbProvider,
 
     ]
 })

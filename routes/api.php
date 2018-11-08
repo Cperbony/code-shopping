@@ -32,7 +32,7 @@ Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
     Route::resource('customers', 'CustomerController', ['only' => ['store']]);
 
     //'jwt.refresh'
-    Route::group(['middleware' => ['auth:api']], function () {
+    Route::group(['middleware' => ['auth:api', 'jwt.refresh']], function () {
 
         Route::post('logout', 'AuthController@logout')->name('logout');
 

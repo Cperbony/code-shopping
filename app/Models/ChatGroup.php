@@ -109,12 +109,13 @@ class ChatGroup extends Model
         $this->syncFbSet();
     }
 
-    protected function syncFbSet()
+    protected function syncFbSet($operation = null)
     {
         $data = $this->toArray();
         $data['photo_url'] = $this->photo_url_base;
         unset($data['photo']);
-        $this->getModelReference()->set($data);
+        $this->setTimestamps($data, $operation);
+        $this->getModelReference()->update($data);
     }
 
     public function getPhotoUrlAttribute()

@@ -5,6 +5,7 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 
 import {HomePage} from '../pages/home/home';
 import {ListPage} from '../pages/list/list';
+// import {LoginPhoneNumberPage} from "../pages/login-phone-number/login-phone-number";
 import {ChatMessagesPage} from "../pages/chat_messages/chat-messages/chat-messages";
 
 @Component({
