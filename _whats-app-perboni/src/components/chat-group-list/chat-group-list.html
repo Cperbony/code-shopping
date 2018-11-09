@@ -7,7 +7,20 @@
             </ion-avatar>
             <h2>{{group.name}}</h2>
             <h3>
-                Quais são as características do produto X?
+                <ng-container *ngIf="group.last_message|async as message">
+                    <span *ngIf="message.type === 'text'">
+                       {{message.use.name}}: {{formatTextMessage(message)}}
+                    </span>
+                    <span *ngIf="message.type === 'audio'">
+                        {{message.use.name}}: {{formatTextMessage(message)}}
+                        <ion-icon name="mic">Audio</ion-icon>
+                    </span>
+                    <span *ngIf="message.type === 'image'">
+                        {{message.use.name}}: {{formatTextMessage(message)}}
+                        <ion-icon name="images">Image</ion-icon>
+                    </span>
+                </ng-container>
+                {{(group.last_message|async)?.content}}
             </h3>
         </ion-item>
     </ion-list>

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FirebaseAuthProvider} from "../../providers/auth/firebase-auth";
-import {ChatGroup} from "../../app/model";
+import {ChatGroup, ChatMessage} from "../../app/model";
 import {ChatGroupFbProvider} from "../../providers/firebase/chat-group-fb";
 
 /**
@@ -27,6 +27,24 @@ export class ChatGroupListComponent {
             .list()
             .subscribe((groups) => this.groups = groups);
 
+        this.chatGroupFb.onAdded()
+            .subscribe((group) => {
+                console.log(group);
+
+            });
+
+        this.chatGroupFb.onChanged()
+            .subscribe((group) => {
+                const index = this.groups.findIndex((g => g.id === group.id));
+                if (index === -1) {
+                    return;
+                }
+                this.groups.splice(index, 1);
+                this.groups.unshift(group);
+                console.log(group);
+            });
+
+
         // const database = this.firebaseAuth.firebase.database();
 
         // database.ref('chat_groups').on('child_added', (data) => {
@@ -43,6 +61,10 @@ export class ChatGroupListComponent {
         //         this.groups[index] = group;
         //     }
         // });
+    }
+
+    formatTextMessage(message: ChatMessage) {
+        return message.content.length > 20 ? message.content.slice(0, 20) + '...' : message.content;
     }
 
 }

@@ -5,6 +5,7 @@ export interface ChatGroup {
     readonly name: string;
     readonly photo_url: string;
     is_member?: Observable<boolean>;
+    last_message?: Observable<ChatMessage>;
     readonly created_at?: { date: string };
     readonly updated_at?: { date: string };
 }
@@ -13,7 +14,8 @@ export interface ChatMessage {
     type: string;
     content: string;
     user_id: string;
-    user?: Promise<{ name: string, photo_url: string }>
+    user$?: Promise<{ name: string, photo_url: string }>
+    user?: User;
     created_at: number;
 }
 

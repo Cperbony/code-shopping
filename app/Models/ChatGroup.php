@@ -109,6 +109,11 @@ class ChatGroup extends Model
         $this->syncFbSet();
     }
 
+    public function updateInFb()
+    {
+        $this->syncFbSet(self::$OPERATION_UPDATE);
+    }
+
     protected function syncFbSet($operation = null)
     {
         $data = $this->toArray();
