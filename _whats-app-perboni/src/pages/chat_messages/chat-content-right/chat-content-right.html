@@ -4,7 +4,7 @@
     </ion-col>
     <ion-col col-3 col-sm-2 col-lg-1 col-xl-1>
         <chat-avatar position="end"
-                     [photo]="(message.user | async)?.photo_url">
+                     [photo]="(message.user$ | async)?.photo_url">
 
         </chat-avatar>
     </ion-col>

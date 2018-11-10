@@ -2,6 +2,8 @@ import {Component} from '@angular/core';
 import {FirebaseAuthProvider} from "../../providers/auth/firebase-auth";
 import {ChatGroup, ChatMessage} from "../../app/model";
 import {ChatGroupFbProvider} from "../../providers/firebase/chat-group-fb";
+import {App} from "ionic-angular";
+import {ChatMessagesPage} from "../../pages/chat_messages/chat-messages/chat-messages";
 
 /**
  * Generated class for the ChatGroupListComponent component.
@@ -18,8 +20,8 @@ export class ChatGroupListComponent {
     groups: ChatGroup[] = [];
 
     constructor(private firebaseAuth: FirebaseAuthProvider,
-                private chatGroupFb: ChatGroupFbProvider) {
-
+                private chatGroupFb: ChatGroupFbProvider,
+                private app: App) {
     }
 
     ngOnInit() {
@@ -29,8 +31,8 @@ export class ChatGroupListComponent {
 
         this.chatGroupFb.onAdded()
             .subscribe((group) => {
+                this.groups.unshift(group);
                 console.log(group);
-
             });
 
         this.chatGroupFb.onChanged()
@@ -65,6 +67,10 @@ export class ChatGroupListComponent {
 
     formatTextMessage(message: ChatMessage) {
         return message.content.length > 20 ? message.content.slice(0, 20) + '...' : message.content;
+    }
+
+    goToMessages(group: ChatGroup){
+        this.app.getRootNav().push(ChatMessagesPage, {'chat_group': group});
     }
 
 }

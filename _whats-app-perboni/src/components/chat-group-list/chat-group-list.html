@@ -1,22 +1,23 @@
 <ion-content>
     <ion-list>
         <ion-item *ngFor="let group of groups"
-                  [hidden]="!(group.is_member|async)">
+                  [hidden]="!(group.is_member|async)"
+                  (click)="goToMessages(group)">
             <ion-avatar item-start>
-                <img src="http://www.gravatar.com/avatar/?d=identicon" alt="">
+                <img [src]="group.photo_url | buildUrl" alt="">
             </ion-avatar>
             <h2>{{group.name}}</h2>
             <h3>
                 <ng-container *ngIf="group.last_message|async as message">
                     <span *ngIf="message.type === 'text'">
-                       {{message.use.name}}: {{formatTextMessage(message)}}
+                       {{message.user.name}}: {{formatTextMessage(message)}}
                     </span>
                     <span *ngIf="message.type === 'audio'">
-                        {{message.use.name}}: {{formatTextMessage(message)}}
+                        {{message.user.name}}: {{formatTextMessage(message)}}
                         <ion-icon name="mic">Audio</ion-icon>
                     </span>
                     <span *ngIf="message.type === 'image'">
-                        {{message.use.name}}: {{formatTextMessage(message)}}
+                        {{message.user.name}}: {{formatTextMessage(message)}}
                         <ion-icon name="images">Image</ion-icon>
                     </span>
                 </ng-container>

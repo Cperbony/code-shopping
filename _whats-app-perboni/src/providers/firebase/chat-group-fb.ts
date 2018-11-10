@@ -27,7 +27,7 @@ export class ChatGroupFbProvider {
                 .once('value', (data) => {
                     const groups = [];
                     data.forEach((child) => {
-                        const group = child.val() as ChatGroup
+                        const group = child.val() as ChatGroup;
                         group.is_member = this.getMember(group);
                         group.last_message = this.getLastMessage(group);
                         groups.unshift(group);

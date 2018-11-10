@@ -9,9 +9,9 @@
     <ion-navbar color="green-dark">
         <ion-item color="green-dark" no-lines>
             <ion-avatar item-start>
-                <img src="https://www.gravatar.com/avatar/nouser.jpg" alt="">
+                <img [src]="chatGroup.photo_url | buildUrl" alt="">
             </ion-avatar>
-            <ion-title>Nome do Grupo</ion-title>
+            <ion-title>{{chatGroup.name}}</ion-title>
         </ion-item>
     </ion-navbar>
 

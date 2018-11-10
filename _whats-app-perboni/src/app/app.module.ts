@@ -26,13 +26,16 @@ import {ChatMessageHttpProvider} from '../providers/http/chat-message-http';
 import {Media} from "@ionic-native/media";
 import {File} from "@ionic-native/file";
 import {ChatGroupFbProvider} from '../providers/firebase/chat-group-fb';
+import {PipesModule} from "../pipes/pipes.module";
 
 function jwtFactory(authService: AuthProvider) {
     return {
         whitelistedDomains: [
             new RegExp('localhost:8000/*'),
             new RegExp('192.168.25.48:8000/*'),
+            new RegExp('192.168.25.49:8000/*'),
             new RegExp('192.168.25.48:8001/*'),
+            new RegExp('192.168.25.49:8001/*'),
             new RegExp('192.168.25.1:8000/*'),
             new RegExp('192.168.25.1:8001/*'),
         ],
@@ -61,6 +64,7 @@ function jwtFactory(authService: AuthProvider) {
         ReactiveFormsModule,
         SuperTabsModule.forRoot(),
         ChatMessagesPageModule,
+        PipesModule,
         JwtModule.forRoot({
             jwtOptionsProvider: {
                 provide: JWT_OPTIONS,
@@ -92,7 +96,6 @@ function jwtFactory(authService: AuthProvider) {
         Media,
         File,
         ChatGroupFbProvider,
-
     ]
 })
 export class AppModule {

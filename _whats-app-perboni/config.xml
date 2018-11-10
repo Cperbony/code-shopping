@@ -3,7 +3,7 @@
     <name>CodeShopping</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content original-src="index.html" src="http://192.168.25.48:8101" />
+    <content original-src="index.html" src="http://192.168.25.49:8101" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
