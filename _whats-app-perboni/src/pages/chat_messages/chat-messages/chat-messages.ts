@@ -20,7 +20,8 @@ import {ChatMessageFbProvider} from "../../../providers/firebase/chat-message-fb
 export class ChatMessagesPage {
 
     chatGroup: ChatGroup;
-    messages: ChatMessage[] = [];
+    messages: { key: string, value: ChatMessage }[] = [];
+    limit = 20;
 
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
@@ -35,8 +36,14 @@ export class ChatMessagesPage {
     }
 
     ionViewDidLoad() {
-        this.chatMessageFb.latest(this.chatGroup)
-            .subscribe((messages) => this.messages = messages);
+        this.chatMessageFb.latest(this.chatGroup, this.limit)
+            .subscribe((messages) => {
+                this.messages = messages;
+
+                this.chatMessageFb.oldest(this.chatGroup, this.limit, messages[0].key)
+                    .subscribe((messages) => this.messages = messages);
+            });
+
 
 
 

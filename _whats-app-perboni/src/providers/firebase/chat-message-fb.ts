@@ -19,18 +19,39 @@ export class ChatMessageFbProvider {
         this.database = this.firebaseAuth.firebase.database();
     }
 
-    latest(group: ChatGroup) {
+    latest(group: ChatGroup, limit: number): Observable<{ key: string, value: ChatMessage }[]> {
         return Observable.create((observer) => {
             this.database.ref(`chat_groups_messages/${group.id}/messages`)
                 .orderByKey()
+                .limitToLast(limit)
                 .once('value', (data) => {
                     const messages = [];
                     data.forEach((child) => {
                         const message = child.val() as ChatMessage;
                         message.user$ = this.getUser(message.user_id);
-                        messages.push(message);
+                        messages.push({key: child.key, value: message});
                     });
-                    observer._next(messages)
+                    observer.next(messages)
+                }, (error) => console.log(error));
+        });
+    }
+
+    oldest(group: ChatGroup, limit: number, messagekey: string): Observable<{ key: string, value: ChatMessage }[]> {
+        return Observable.create((observer) => {
+            this.database.ref(`chat_groups_messages/${group.id}/messages`)
+                .orderByKey()
+                .limitToLast(limit + 1)
+                .endAt(messagekey)
+                .once('value', (data) => {
+                    const messages = [];
+                    data.forEach((child) => {
+                        const message = child.val() as ChatMessage;
+                        message.user$ = this.getUser(message.user_id);
+                        messages.push({key: child.key, value: message});
+                    });
+                    messages.splice(messages.length - 1, 1);
+                    console.log(messages);
+                    observer.next(messages)
                 }, (error) => console.log(error));
         });
     }
