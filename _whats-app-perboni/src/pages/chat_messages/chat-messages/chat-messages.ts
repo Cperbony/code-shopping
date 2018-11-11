@@ -38,6 +38,7 @@ export class ChatMessagesPage {
             id: 1,
             name: '',
             photo_url: '',
+            viewed: false,
         };
     }
 
