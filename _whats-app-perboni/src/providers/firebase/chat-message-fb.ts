@@ -56,7 +56,7 @@ export class ChatMessageFbProvider {
         });
     }
 
-    onAdded(group: ChatGroup): Observable<{ key: string, value: ChatMessage }[]> {
+    onAdded(group: ChatGroup): Observable<{ key: string, value: ChatMessage }> {
         return Observable.create((observer) => {
             this.database.ref(`chat_groups_messages/${group.id}/messages`)
                 .orderByChild('created_at')

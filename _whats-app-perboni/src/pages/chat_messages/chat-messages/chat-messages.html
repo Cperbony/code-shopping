@@ -35,8 +35,11 @@
             </chat-content-right>
         </ng-container>
     </div>
-    <ion-fab edge text-center [hidden]="showContent ? !showButtonScrollBottom() : true">
-        <ion-badge color="green-dark">{{ countNewMessages }}</ion-badge>
+    <ion-fab edge text-center
+             [hidden]="showContent ? !showButtonScrollBottom() : true">
+        <ion-badge color="green-dark"
+                   [hidden]="!countNewMessages">{{ countNewMessages }}
+        </ion-badge>
         <button ion-fab icon-only color="beige-light">
             <ion-icon name="arrow-dropdown-circle"></ion-icon>
         </button>
