@@ -34,10 +34,6 @@ function jwtFactory(authService: AuthProvider) {
             new RegExp('localhost:8000/*'),
             new RegExp('192.168.25.48:8000/*'),
             new RegExp('192.168.25.49:8000/*'),
-            new RegExp('192.168.25.48:8001/*'),
-            new RegExp('192.168.25.49:8001/*'),
-            new RegExp('192.168.25.1:8000/*'),
-            new RegExp('192.168.25.1:8001/*'),
         ],
         tokenGetter: () => {
             return authService.getToken();

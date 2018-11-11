@@ -1,8 +1,6 @@
-import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {Component, ViewChild} from '@angular/core';
+import {Content, InfiniteScroll, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {ChatGroup, ChatMessage} from "../../../app/model";
-import {FirebaseAuthProvider} from "../../../providers/auth/firebase-auth";
-import {Observable} from "rxjs/Observable";
 import {ChatMessageFbProvider} from "../../../providers/firebase/chat-message-fb";
 
 /**
@@ -22,6 +20,12 @@ export class ChatMessagesPage {
     chatGroup: ChatGroup;
     messages: { key: string, value: ChatMessage }[] = [];
     limit = 20;
+    showContent = false;
+    canMoreMessages = true;
+    countNewMessages = 20;
+
+    @ViewChild(Content)
+    content: Content;
 
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
@@ -36,34 +40,66 @@ export class ChatMessagesPage {
     }
 
     ionViewDidLoad() {
-        this.chatMessageFb.latest(this.chatGroup, this.limit)
+        this.chatMessageFb
+            .latest(this.chatGroup, this.limit)
             .subscribe((messages) => {
                 this.messages = messages;
-
-                this.chatMessageFb.oldest(this.chatGroup, this.limit, messages[0].key)
-                    .subscribe((messages) => this.messages = messages);
+                setTimeout(() => {
+                    this.scrollToBottom();
+                    this.showContent = true;
+                }, 500);
             });
-
-
-
-
-        // const database = this.firebaseAuth.firebase.database();
-        //
-        // database
-        //     .ref(`chat_groups_messages/${this.chatGroup.id}/messages`)
-        //     .on('child_added', (data) => {
-        //         const message = data.val();
-        //         message.user = Observable.create((observer) => {
-        //             database.ref(`users/${message.user_id}`)
-        //                 .on('value', (data) => {
-        //                     const user = data.val();
-        //                     observer.next(user);
-        //                 });
-        //         });
-        //         message.user.subscribe((user) => console.log(user));
-        //
-        //         this.messages.push(message);
-        //     });
+        this.chatMessageFb.onAdded(this.chatGroup)
+            .subscribe((message) => {
+                this.messages.push(message);
+            });
     }
+
+    doInfinite(infiniteScroll: InfiniteScroll) {
+        this.chatMessageFb
+            .oldest(this.chatGroup, this.limit, this.messages[0].key)
+            .subscribe((messages) => {
+                if (!messages.length) {
+                    this.canMoreMessages = false;
+                }
+                this.messages.unshift(...messages);
+                infiniteScroll.complete();
+            }, () => infiniteScroll.complete());
+    }
+
+    scrollToBottom() {
+        this.countNewMessages = 0;
+        this.content.scrollToBottom(0);
+    }
+
+    showButtonScrollBottom() {
+        const dimensions = this.content.getContentDimensions();
+        const contentHeight = dimensions.contentHeight;
+        const scrollTop = dimensions.scrollTop;
+        const scrollHeight = dimensions.scrollHeight;
+
+        return scrollHeight > scrollTop + contentHeight;
+        // console.log('scrolltop', dimensions.scrollTop, 'scrollHeight', dimensions.scrollHeight, 'contentHeight', dimensions.contentHeight);
+    }
+
+
+    // const database = this.firebaseAuth.firebase.database();
+    //
+    // database
+    //     .ref(`chat_groups_messages/${this.chatGroup.id}/messages`)
+    //     .on('child_added', (data) => {
+    //         const message = data.val();
+    //         message.user = Observable.create((observer) => {
+    //             database.ref(`users/${message.user_id}`)
+    //                 .on('value', (data) => {
+    //                     const user = data.val();
+    //                     observer.next(user);
+    //                 });
+    //         });
+    //         message.user.subscribe((user) => console.log(user));
+    //
+    //         this.messages.push(message);
+    //     });
+
 
 }

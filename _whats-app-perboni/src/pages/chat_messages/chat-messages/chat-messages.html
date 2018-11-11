@@ -18,18 +18,30 @@
 </ion-header>
 
 <ion-content padding class="chat-bg">
-    <ng-container *ngFor="let message of messages">
-        <chat-content-left
-                [message]="message.value"
-                *ngIf="!(message.value.user_id | isCurrentUser)">
-        </chat-content-left>
+    <ion-infinite-scroll position="top" (ionInfinite)="doInfinite($event)"
+                         [enabled]="canMoreMessages">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+    <div [style.visibility]="showContent ? 'visible' : 'hidden'">
+        <ng-container *ngFor="let message of messages">
+            <chat-content-left
+                    [message]="message.value"
+                    *ngIf="!(message.value.user_id | isCurrentUser)">
+            </chat-content-left>
 
-        <chat-content-right
-                [message]="message.value"
-                *ngIf="message.value.user_id | isCurrentUser">
-        </chat-content-right>
+            <chat-content-right
+                    [message]="message.value"
+                    *ngIf="message.value.user_id | isCurrentUser">
+            </chat-content-right>
+        </ng-container>
+    </div>
+    <ion-fab edge text-center [hidden]="showContent ? !showButtonScrollBottom() : true">
+        <ion-badge color="green-dark">{{ countNewMessages }}</ion-badge>
+        <button ion-fab icon-only color="beige-light">
+            <ion-icon name="arrow-dropdown-circle"></ion-icon>
+        </button>
+    </ion-fab>
 
-    </ng-container>
 </ion-content>
 
 <ion-footer no-border>
