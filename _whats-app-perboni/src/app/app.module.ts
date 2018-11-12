@@ -27,7 +27,9 @@ import {Media} from "@ionic-native/media";
 import {File} from "@ionic-native/file";
 import {ChatGroupFbProvider} from '../providers/firebase/chat-group-fb';
 import {PipesModule} from "../pipes/pipes.module";
-import { ChatGroupViewerProvider } from '../providers/chat-group-viewer/chat-group-viewer';
+import {ChatGroupViewerProvider} from '../providers/chat-group-viewer/chat-group-viewer';
+import {FirebasePhoneNumberCheckComponent} from "../components/firebase-phone-number-check/firebase-phone-number-check";
+import {SelectCountriesCodeComponent} from "../components/select-countries-code/select-countries-code";
 
 function jwtFactory(authService: AuthProvider) {
     return {
@@ -52,7 +54,9 @@ function jwtFactory(authService: AuthProvider) {
         ResetPhoneNumberPage,
         CustomerCreatePage,
         MainPage,
-        ChatGroupListComponent
+        ChatGroupListComponent,
+        FirebasePhoneNumberCheckComponent,
+        SelectCountriesCodeComponent
     ],
     imports: [
         BrowserModule,
@@ -80,7 +84,9 @@ function jwtFactory(authService: AuthProvider) {
         ResetPhoneNumberPage,
         CustomerCreatePage,
         MainPage,
-        ChatGroupListComponent
+        ChatGroupListComponent,
+        FirebasePhoneNumberCheckComponent,
+        SelectCountriesCodeComponent
     ],
     providers: [
         StatusBar,
@@ -93,7 +99,7 @@ function jwtFactory(authService: AuthProvider) {
         Media,
         File,
         ChatGroupFbProvider,
-    ChatGroupViewerProvider,
+        ChatGroupViewerProvider
     ]
 })
 export class AppModule {

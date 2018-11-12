@@ -15,7 +15,7 @@ import {LoginPhoneNumberPage} from "../pages/login-phone-number/login-phone-numb
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = ChatMessagesPage;
+  rootPage: any = LoginPhoneNumberPage;
 
   pages: Array<{title: string, component: any}>;
 
