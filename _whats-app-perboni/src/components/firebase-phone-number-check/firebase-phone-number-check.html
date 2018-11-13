@@ -1,45 +1,57 @@
 <ion-card>
-    <ion-card-header>
-        Insira seu número de telefone
-    </ion-card-header>
+    <ng-container *ngIf="verificationId === ''; else showSmsCode">
+        <ion-card-header>
+            Insira seu número de telefone
+        </ion-card-header>
 
-    <ion-card-content>
-        <ion-row>
+        <ion-card-content>
+            <ion-row>
 
-            <ion-col col-6>
-               <select-countries-code></select-countries-code>
-            </ion-col>
+                <ion-col col-6>
+                    <select-countries-code
+                            [(countryCode)]="countryCode">
+                    </select-countries-code>
+                    <!--{{countryCode}}-->
+                </ion-col>
 
-            <ion-col>
-                <ion-item no-padding>
-                    <ion-input type="number" placeholder="Número de Telefone"
-                               class="phone-number"></ion-input>
-                </ion-item>
-            </ion-col>
-        </ion-row>
-        <button type="button" ion-button color="green-dark">Verificar</button>
-    </ion-card-content>
-</ion-card>
+                <ion-col>
+                    <ion-item no-padding>
+                        <ion-input type="number" placeholder="Número de Telefone"
+                                   class="phone-number"
+                                   [(ngModel)]="phoneNumber">
+                        </ion-input>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <button type="button" ion-button color="green-dark" (click)="verifyPhoneNumber()">Verificar</button>
+        </ion-card-content>
+    </ng-container>
 
-<ion-card>
-    <ion-card-header>
-        Confirmar seu número de telefone
-    </ion-card-header>
+    <ng-template #showSmsCode>
+        <ion-card-header>
+            Confirmar seu número de telefone
+        </ion-card-header>
 
-    <ion-card-content>
-        <p>Insira o código de 6 digítos enviado para <br>
-            <strong>999999999</strong>
-        </p>
+        <ion-card-content>
+            <p>Insira o código de 6 digítos enviado para <br>
+                <strong>{{fullPhoneNumber}}</strong>
+            </p>
 
-        <ion-item>
-            <ion-input type="number" placeholder="Código SMS"></ion-input>
-        </ion-item>
+            <ion-item>
+                <ion-input type="number" placeholder="Código SMS"></ion-input>
+            </ion-item>
 
-        <p text-center=>
-            <button type="button" ion-button outline color="green-dark">Cancelar</button>
-            <button type="button" ion-button color="green-dark">Continuar</button>
-            <a href="javascript:void(0)">Reenviar</a>
-        </p>
+            <p text-center>
+                <button type="button"
+                        ion-button outline color="green-dark"
+                        (click)="cancel()">Cancelar
+                </button>
+                <button type="button"
+                        ion-button color="green-dark">Continuar
+                </button>
+                <a href="javascript:void(0)">Reenviar</a>
+            </p>
+        </ion-card-content>
 
-    </ion-card-content>
+    </ng-template>
 </ion-card>
