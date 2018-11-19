@@ -92,7 +92,6 @@ export class ChatFooterComponent {
 
     releaseAudioButton() {
         this.subjectReleaseAudioButton.next();
-
     }
 
     private clearRecording() {

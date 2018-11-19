@@ -63,9 +63,42 @@ export class AuthProvider {
         return window.localStorage.getItem(TOKEN_KEY);
     }
 
-    isAuth(): boolean {
-        const token = this.getToken();
-        return !new JwtHelperService().isTokenExpired(token, 30);
+    async isFullyAuth(): Promise<boolean> {
+        return Promise.all([this.isAuth(), this.firebaseAuth.isAuth()])
+            .then(values => values[0] && values[1]);
     }
+
+    async isAuth(): Promise<boolean> {
+        const token = this.getToken();
+        if (!token) {
+            return false;
+        }
+        if (this.isTokenExpired(token)) {
+            try {
+                await this.refresh().toPromise();
+            } catch (e) {
+                console.log('Erro ao fazer refresh token', e);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    isTokenExpired(token: string) {
+        return new JwtHelperService().isTokenExpired(token, 30);
+    }
+
+    refresh(): Observable<{ token: string }> {
+        return this.http
+            .post<{ token: string }>(this.refreshUrl(), {})
+            .pipe(
+                tap(data => this.setToken(data.token))
+            )
+    }
+
+    refreshUrl() {
+        return `${environment.api.url}/refresh`;
+    }
+
 
 }

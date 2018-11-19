@@ -13,7 +13,7 @@ import {LoginPhoneNumberPage} from "../pages/login-phone-number/login-phone-numb
 import {ResetPhoneNumberPage} from "../pages/reset-phone-number/reset-phone-number";
 import {FirebaseAuthProvider} from '../providers/auth/firebase-auth';
 import {AuthProvider} from '../providers/auth/auth';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {MainPage} from "../pages/main/main";
 import {CustomerCreatePage} from "../pages/customer-create/customer-create";
 import {CustomerHttpProvider} from '../providers/http/customer-http';
@@ -30,6 +30,9 @@ import {PipesModule} from "../pipes/pipes.module";
 import {ChatGroupViewerProvider} from '../providers/chat-group-viewer/chat-group-viewer';
 import {FirebasePhoneNumberCheckComponent} from "../components/firebase-phone-number-check/firebase-phone-number-check";
 import {SelectCountriesCodeComponent} from "../components/select-countries-code/select-countries-code";
+import {RefreshTokenInterceptor} from "../providers/auth/refresh-token-interceptor";
+import { RedirectIfNotAuthProvider } from '../providers/redirect-if-not-auth/redirect-if-not-auth';
+import { StoragePermissionProvider } from '../providers/storage-permission/storage-permission';
 
 function jwtFactory(authService: AuthProvider) {
     return {
@@ -99,7 +102,14 @@ function jwtFactory(authService: AuthProvider) {
         Media,
         File,
         ChatGroupFbProvider,
-        ChatGroupViewerProvider
+        ChatGroupViewerProvider,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: RefreshTokenInterceptor,
+            multi: true
+        },
+    RedirectIfNotAuthProvider,
+    StoragePermissionProvider,
     ]
 })
 export class AppModule {

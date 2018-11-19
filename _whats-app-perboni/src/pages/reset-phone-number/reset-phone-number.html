@@ -20,10 +20,14 @@
         </ion-item>
     </ion-list>
     <button ion-button color="green-dark" block
-            (click)="showFirebaseUI()"
-            [hidden]="canShowFirebaseUi"
+            (click)="loadFirebaseUI()"
+            [hidden]="hasBtnEmailClicked"
             [disabled]="email.invalid">
         Continuar
     </button>
-    <div id="firebase-ui" [hidden]="!canShowFirebaseUi || email.invalid"></div>
+    <div id="firebase-ui" [hidden]="!hasBtnEmailClicked || email.invalid"></div>
+    <firebase-phone-number-check
+            [hidden]="!hasBtnEmailClicked || email.invalid || showFirebaseUI"
+    (onAuth)="requestUpdatePhoneNumber()">
+    </firebase-phone-number-check>
 </ion-content>

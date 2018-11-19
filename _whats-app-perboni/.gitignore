@@ -36,3 +36,5 @@ UserInterfaceState.xcuserstate
 
 src/environments/environment.ts
 src/environments/environment.prod.ts
+google-services.json
+

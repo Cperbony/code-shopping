@@ -5,18 +5,16 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-  <ion-navbar color="green-dark">
-    <ion-title text-center>Login com Número de Telefone</ion-title>
-  </ion-navbar>
-
+    <ion-navbar color="green-dark">
+        <ion-title text-center>Login com Número de Telefone</ion-title>
+    </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
-  <firebase-phone-number-check></firebase-phone-number-check>
-  <div id="firebase-ui">
-
-  </div>
+    <firebase-phone-number-check
+            *ngIf="!showFirebaseUI">
+    </firebase-phone-number-check>
+    <div id="firebase-ui"></div>
 
 </ion-content>

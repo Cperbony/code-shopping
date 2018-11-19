@@ -5,6 +5,8 @@ import {FirebaseAuthProvider} from "../../providers/auth/firebase-auth";
 import {AuthProvider} from "../../providers/auth/auth";
 import {MainPage} from "../main/main";
 import {CustomerCreatePage} from "../customer-create/customer-create";
+import {environment} from "@app/env";
+import {HttpClient} from "@angular/common/http";
 
 // declare const firebaseui;
 // (<any>window).firebase = firebase;
@@ -23,10 +25,16 @@ import {CustomerCreatePage} from "../customer-create/customer-create";
 })
 export class LoginPhoneNumberPage {
 
+    showFirebaseUI = environment.loadFirebaseUI;
+
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
                 private firebaseAuth: FirebaseAuthProvider,
-                private authService: AuthProvider) {
+                private authService: AuthProvider,
+                private http: HttpClient) {
+        this.http.get(`${environment.api.url}/products`, {})
+            .subscribe(() => {
+            });
     }
 
     //Se autenticado, direcionado para o Main
@@ -46,10 +54,12 @@ export class LoginPhoneNumberPage {
                     unsubscribed();
                 }
             });
-        this.loadForm();
+        if (environment.loadFirebaseUI) {
+            this.loadForm();
+        }
     }
 
-    handleAuthUser(){
+    handleAuthUser() {
         this.authService
             .login()
             .subscribe((token) => {
@@ -57,15 +67,17 @@ export class LoginPhoneNumberPage {
                 console.log(token);
                 this.redirectToMainPage();
             }, (responseError) => {
-                this.firebaseAuth.makePhoneNumberForm('#firebase-ui')
-                    .then(()=>this.handleAuthUser());
+                if (environment.loadFirebaseUI) {
+                    this.firebaseAuth.makePhoneNumberForm('#firebase-ui')
+                        .then(() => this.handleAuthUser());
+                }
                 this.redirectToCustomerCreatePage();
                 console.log(responseError);
                 console.log('redirecionar para a criação da conta do cliente');
             });
     }
 
-    loadForm(){
+    loadForm() {
         this.firebaseAuth.makePhoneNumberForm('#firebase-ui');
     }
 

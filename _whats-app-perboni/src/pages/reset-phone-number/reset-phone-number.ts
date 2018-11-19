@@ -4,6 +4,7 @@ import {FirebaseAuthProvider} from "../../providers/auth/firebase-auth";
 import {FormControl, Validators} from "@angular/forms";
 import {CustomerHttpProvider} from "../../providers/http/customer-http";
 import {LoginOptionsPage} from "../login-options/login-options";
+import {environment} from "@app/env";
 
 /**
  * Generated class for the ResetPhoneNumberPage page.
@@ -20,7 +21,9 @@ import {LoginOptionsPage} from "../login-options/login-options";
 export class ResetPhoneNumberPage {
 
     email = new FormControl('', [Validators.required, Validators.email]);
-    canShowFirebaseUi = false;
+
+    hasBtnEmailClicked = false;
+    showFirebaseUI = environment.loadFirebaseUI;
 
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
@@ -34,44 +37,50 @@ export class ResetPhoneNumberPage {
         console.log('ionViewDidLoad ResetPhoneNumberPage');
     }
 
-    showFirebaseUI() {
-        this.canShowFirebaseUi = true;
+    loadFirebaseUI() {
+        this.hasBtnEmailClicked = true;
         this.handleUpdate();
     }
 
     handleUpdate() {
-        this.firebaseAuth
-            .makePhoneNumberForm('#firebase-ui')
-            .then(() => {
-                const email = this.email.value;
-                this.customerHttp.requestUpdatePhoneNumber(email)
-                    .subscribe(() => {
-                            const alert = this.alertCtrl.create({
-                                title: 'Alerta',
-                                subTitle: `
+        if (environment.loadFirebaseUI) {
+            this.firebaseAuth
+                .makePhoneNumberForm('#firebase-ui')
+                .then(() => {
+                    this.requestUpdatePhoneNumber();
+                });
+        }
+    }
+
+    requestUpdatePhoneNumber() {
+        const email = this.email.value;
+        this.customerHttp.requestUpdatePhoneNumber(email)
+            .subscribe(() => {
+                    const alert = this.alertCtrl.create({
+                        title: 'Alerta',
+                        subTitle: `
                             Um e-mail com a validação da mudança foi enviado.
                             Para logar, valide com o novo telefone.
                             `,
-                                buttons: [
-                                    {
-                                        text: 'Ok',
-                                        handler: () => {
-                                            this.navCtrl.setRoot(LoginOptionsPage);
-                                        }
-                                    }
-                                ]
-                            });
-                            alert.present();
-                        },
-                        () => {
-                            const toast = this.toastCtrl.create({
-                                message: 'Não foi possível requisitar a alteração do telefone',
-                                duration: 3000
-                            });
-                            toast.present();
-                            this.handleUpdate();
-                        });
-            });
+                        buttons: [
+                            {
+                                text: 'Ok',
+                                handler: () => {
+                                    this.navCtrl.setRoot(LoginOptionsPage);
+                                }
+                            }
+                        ]
+                    });
+                    alert.present();
+                },
+                () => {
+                    const toast = this.toastCtrl.create({
+                        message: 'Não foi possível requisitar a alteração do telefone',
+                        duration: 3000
+                    });
+                    toast.present();
+                    this.handleUpdate();
+                });
     }
 
 }

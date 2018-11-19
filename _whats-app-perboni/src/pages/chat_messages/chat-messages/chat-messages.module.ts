@@ -11,6 +11,7 @@ import {PipesModule} from "../../../pipes/pipes.module";
 import {LongPressModule} from "ionic-long-press";
 import {AudioRecorderProvider} from "../../../providers/audio-recorder/audio-recorder";
 import {ChatMessageFbProvider} from "../../../providers/firebase/chat-message-fb";
+import {RedirectIfNotAuthProvider} from "../../../providers/redirect-if-not-auth/redirect-if-not-auth";
 
 @NgModule({
     declarations: [
@@ -30,6 +31,7 @@ import {ChatMessageFbProvider} from "../../../providers/firebase/chat-message-fb
     providers: [
         AudioRecorderProvider,
         ChatMessageFbProvider,
+        RedirectIfNotAuthProvider
     ]
 })
 export class ChatMessagesPageModule {
