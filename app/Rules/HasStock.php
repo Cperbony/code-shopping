@@ -19,7 +19,6 @@ class HasStock implements Rule
      */
     public function __construct(Product $product)
     {
-        //
         $this->product = $product;
     }
 

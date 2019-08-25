@@ -13,6 +13,7 @@ class ProductsTableSeeder extends Seeder
      */
     public function run()
     {
+        /** @var \Illuminate\Database\Eloquent\Collection $categories */
         $categories = Category::all();
         factory(Product::class, 30)
             ->create()
