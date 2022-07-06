@@ -38,7 +38,7 @@
     "pnotify": "^4.0.0-alpha.4",
     "popper.js": "^1.14.3",
     "rxjs": "^6.0.0",
-    "select2": "^4.0.3",
+    "select2": "^4.0.6",
     "select2-bootstrap4-theme": "^1.0.0",
     "scriptjs": "^2.5.8",
     "zone.js": "^0.8.26"
